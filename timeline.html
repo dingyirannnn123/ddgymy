@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lin &amp; Wang | Celestial Timeline</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&amp;family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#A5B4FC",
+                        "dreamy-blue": "#E0F2FE",
+                        "dreamy-purple": "#F3E8FF",
+                        "soft-pink": "#FCE7F3",
+                        "magic-gold": "#FDE68A",
+                        "electric-blue": "#60A5FA",
+                        "magic-purple": "#C084FC"
+                    },
+                    fontFamily: {
+                        "display": ["Fredoka", "sans-serif"],
+                        "body": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.75rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        :root {
+            --bg-gradient: linear-gradient(135deg, #f3e8ff 0%, #e0f2fe 100%);
+            --starlight-river: linear-gradient(to bottom, 
+                #60A5FA, 
+                #C084FC, 
+                #60A5FA, 
+                #C084FC
+            );
+        }
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            scroll-behavior: smooth;
+        }
+        .sparkle-bg {
+            background-image: radial-gradient(circle, #fff 1.5px, transparent 1.5px);
+            background-size: 40px 40px;
+        }
+        .starlight-axis {
+            background: var(--starlight-river);
+            background-size: 100% 300%;
+            animation: flowingRiver 8s linear infinite;
+            box-shadow: 0 0 15px rgba(165, 180, 252, 0.6), 0 0 30px rgba(192, 132, 252, 0.3);
+            position: relative;
+        }
+        .starlight-axis::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, 
+                transparent, 
+                rgba(255,255,255,0.8) 20%, 
+                transparent 40%, 
+                transparent 60%, 
+                rgba(255,255,255,0.8) 80%, 
+                transparent
+            );
+            background-size: 100% 400px;
+            animation: pulseDown 4s linear infinite;
+        }
+        @keyframes flowingRiver {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 0% 100%; }
+        }
+        @keyframes pulseDown {
+            0% { background-position: 0% -400px; }
+            100% { background-position: 0% 400px; }
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            filter: blur(1px);
+            animation: twinkle 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+        .achievement-card {
+            @apply bg-white/80 backdrop-blur-sm border-2 border-white/50 shadow-sm transition-all duration-300;
+        }
+        .achievement-card:hover {
+            @apply -translate-y-1 shadow-md bg-white/95 border-indigo-200;
+        }
+        .quick-nav-link:hover .dot {
+            @apply scale-150 bg-indigo-500;
+        }
+    </style>
+</head>
+<body class="font-body text-[#4B5563] antialiased sparkle-bg">
+<div class="relative flex min-h-screen flex-col">
+<header class="sticky top-0 z-[100] w-full bg-white/60 backdrop-blur-xl px-10 py-3 border-b border-white/40">
+<div class="max-w-[1400px] mx-auto flex items-center justify-between">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-indigo-400">
+<div class="size-9 bg-white rounded-full flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[24px]">auto_awesome</span>
+</div>
+<h2 class="text-xl font-display font-bold leading-tight tracking-tight text-indigo-600">Lin &amp; Wang</h2>
+</div>
+<nav class="hidden md:flex items-center gap-7">
+    <a class="text-slate-500 text-xs font-bold hover:text-indigo-500 transition-colors" href="index.html">基本信息</a>
+    <a class="text-indigo-600 text-xs font-black border-b-2 border-indigo-400" href="timeline.html">成就与荣誉</a>
+    <a class="text-slate-500 text-xs font-bold hover:text-indigo-500 transition-colors" href="journey.html">星光路径</a>
+    <a class="text-slate-500 text-xs font-bold hover:text-indigo-500 transition-colors" href="brands.html">品牌代言</a>
+    <a class="text-slate-500 text-xs font-bold hover:text-indigo-500 transition-colors" href="pets.html">萌宠</a>
+</nav>
+
+<!-- Mobile Menu Button -->
+<button id="mobile-menu-btn" class="md:hidden text-indigo-500 p-2 ml-auto mr-4">
+    <span class="material-symbols-outlined text-3xl">menu</span>
+</button>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center rounded-full h-9 px-5 bg-indigo-400 text-white text-xs font-bold hover:bg-indigo-500 transition-all shadow-md">
+                    时间轴 ✨
+                </button>
+</div>
+</div>
+</header>
+<aside class="fixed right-8 top-1/2 -translate-y-1/2 z-[90] hidden lg:flex flex-col gap-4 bg-white/40 backdrop-blur-md p-3 rounded-full border border-white/60 shadow-lg">
+<a class="quick-nav-link group flex flex-col items-center gap-1" href="#year-2025">
+<span class="text-[10px] font-bold text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity">2025</span>
+<div class="dot size-3 rounded-full bg-indigo-200 transition-all"></div>
+</a>
+<a class="quick-nav-link group flex flex-col items-center gap-1" href="#year-2024">
+<span class="text-[10px] font-bold text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity">2024</span>
+<div class="dot size-3 rounded-full bg-indigo-200 transition-all"></div>
+</a>
+<a class="quick-nav-link group flex flex-col items-center gap-1" href="#year-2023">
+<span class="text-[10px] font-bold text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity">2023</span>
+<div class="dot size-3 rounded-full bg-indigo-200 transition-all"></div>
+</a>
+<a class="quick-nav-link group flex flex-col items-center gap-1" href="#year-2022">
+<span class="text-[10px] font-bold text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity">2022</span>
+<div class="dot size-3 rounded-full bg-indigo-200 transition-all"></div>
+</a>
+ 
+</aside>
+<main class="flex-1 max-w-[1300px] mx-auto w-full px-6 py-10">
+<div class="flex flex-col items-center text-center gap-3 mb-12">
+<h1 class="text-indigo-800 font-display text-4xl md:text-5xl font-bold">
+                Celestial <span class="text-purple-500 italic">Timeline</span>
+</h1>
+<p class="text-slate-500 text-sm max-w-lg font-light">
+                林高远与王曼昱，在乒乓球的银河中并肩前行
+            </p>
+</div>
+<div class="grid grid-cols-2 gap-20 mb-8 px-10">
+<div class="text-center">
+<div class="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-blue-100 text-blue-600 font-display font-bold text-lg border-2 border-white shadow-sm">
+<span class="material-symbols-outlined text-[20px]">cloud</span>
+                    Lin Gaoyuan
+                </div>
+</div>
+<div class="text-center">
+<div class="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-purple-100 text-purple-600 font-display font-bold text-lg border-2 border-white shadow-sm">
+<span class="material-symbols-outlined text-[20px]">filter_drama</span>
+                    Wang Manyu
+                </div>
+</div>
+</div>
+<div class="relative">
+<div class="absolute left-1/2 top-0 bottom-0 transform -translate-x-1/2 w-2 starlight-axis rounded-full z-10 overflow-visible hidden md:block">
+<div class="particle" style="top: 5%; left: -10px; animation-delay: 0.2s;"></div>
+<div class="particle" style="top: 15%; right: -12px; animation-delay: 1.1s;"></div>
+<div class="particle" style="top: 25%; left: -8px; animation-delay: 0.5s;"></div>
+<div class="particle" style="top: 40%; right: -15px; animation-delay: 2.3s;"></div>
+<div class="particle" style="top: 55%; left: -14px; animation-delay: 0.8s;"></div>
+<div class="particle" style="top: 70%; right: -10px; animation-delay: 1.5s;"></div>
+<div class="particle" style="top: 85%; left: -11px; animation-delay: 2.7s;"></div>
+<div class="particle" style="top: 95%; right: -9px; animation-delay: 0.4s;"></div>
+</div>
+<section class="relative pt-8 pb-12" id="year-2025">
+<div class="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 z-30">
+<div class="px-4 py-1 rounded-full bg-indigo-500 text-white font-display font-bold text-sm shadow-lg border-2 border-white flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">star</span>
+                        2025
+                    </div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 relative">
+<div class="space-y-4">
+<div class="achievement-card p-2 rounded-xl">
+<div class="flex items-start justify-between mb-2">
+<span class="text-[10px] font-bold text-blue-400 uppercase tracking-tighter">第十五届全运会</span>
+<span class="text-[10px] text-slate-400">2025</span>
+</div>
+<h4 class="text-sm font-bold text-slate-700 mb-1">混双冠军</h4>
+<div class="mt-1 flex justify-center">
+<img src="https://r2.ddgymy.dpdns.org/PicGo/lgy十五运.webp" class="h-60 w-auto rounded-lg object-contain shadow-sm" alt="Lin Gaoyuan Mixed Doubles">
+</div>
+</div>
+<div class="achievement-card p-2 rounded-xl">
+<div class="flex items-start justify-between mb-2">
+<span class="text-[10px] font-bold text-blue-400 uppercase tracking-tighter">第十五届全运会</span>
+<span class="text-[10px] text-slate-400">2025</span>
+</div>
+<h4 class="text-sm font-bold text-slate-700 mb-1">男团季军</h4>
+<div class="mt-1 flex justify-center">
+<img src="https://r2.ddgymy.dpdns.org/PicGo/lgy十五运男团.webp" class="h-60 w-auto rounded-lg object-contain shadow-sm" alt="Lin Gaoyuan Men's Team">
+</div>
+</div>
+</div>
+<div class="space-y-4 pt-12">
+<div class="achievement-card p-2 rounded-xl">
+<div class="flex items-start justify-between mb-1">
+<span class="text-[10px] font-bold text-purple-400 uppercase">第十五届全运会</span>
+<span class="text-[10px] text-slate-400">2025</span>
+</div>
+<h4 class="text-sm font-bold text-slate-700">女单冠军</h4>
+<div class="mt-1 flex justify-center">
+<img src="https://r2.ddgymy.dpdns.org/PicGo/myindex.webp" class="h-60 w-auto rounded-lg object-contain shadow-sm" alt="Wang Manyu">
+</div>
+</div>
+<div class="achievement-card p-2 rounded-xl">
+<div class="flex items-start justify-between mb-1">
+<span class="text-[10px] font-bold text-purple-400 uppercase">北京WTT大满贯</span>
+<span class="text-[10px] text-slate-400">2025</span>
+</div>
+<h4 class="text-sm font-bold text-slate-700">女单女双冠军</h4>
+<div class="mt-1 flex justify-center">
+<img src="https://r2.ddgymy.dpdns.org/PicGo/2025wmy北满.webp" class="h-60 w-auto rounded-lg object-contain shadow-sm" alt="Wang Manyu Beijing WTT">
+</div>
+</div>
+<div class="achievement-card p-2 rounded-xl">
+<div class="flex items-start justify-between mb-1">
+<span class="text-[10px] font-bold text-purple-400 uppercase">多哈世乒赛</span>
+<span class="text-[10px] text-slate-400">2025</span>
+</div>
+<h4 class="text-sm font-bold text-slate-700">女双冠军</h4>
+<div class="mt-1 flex justify-center">
+<img src="https://r2.ddgymy.dpdns.org/PicGo/2025多哈.webp" class="h-60 w-auto rounded-lg object-contain shadow-sm" alt="Wang Manyu Doha">
+</div>
+</div>
+<div class="achievement-card p-2 rounded-xl">
+<div class="flex items-start justify-between mb-1">
+<span class="text-[10px] font-bold text-purple-400 uppercase">深圳亚洲杯</span>
+<span class="text-[10px] text-slate-400">2025</span>
+</div>
+<h4 class="text-sm font-bold text-slate-700">女单冠军</h4>
+<div class="mt-1 flex justify-center">
+<img src="https://r2.ddgymy.dpdns.org/PicGo/2025亚洲杯.webp" class="h-60 w-auto rounded-lg object-contain shadow-sm" alt="Wang Manyu Asian Cup">
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="relative pt-8 pb-12" id="year-2024">
+<div class="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 z-30">
+<div class="px-4 py-1 rounded-full bg-indigo-500 text-white font-display font-bold text-sm shadow-lg border-2 border-white flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">star</span>
+                        2024
+                    </div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 relative">
+<div class="space-y-4">
+<div class="achievement-card p-2 rounded-xl">
+<div class="flex items-start justify-between mb-2">
+<span class="text-[10px] font-bold text-blue-400 uppercase tracking-tighter">新加坡WTT大满贯</span>
+<span class="text-[10px] text-slate-400">2024</span>
+</div>
+<h4 class="text-sm font-bold text-slate-700 mb-1">男双冠军</h4>
+<div class="mt-1 flex justify-center">
+<img src="https://r2.ddgymy.dpdns.org/PicGo/2024lgy新加坡.webp" class="h-60 w-auto rounded-lg object-contain shadow-sm" alt="Lin Gaoyuan Singapore WTT">
+</div>
+</div>
+<div class="achievement-card p-2 rounded-xl">
+<div class="flex items-start justify-between mb-2">
+<span class="text-[10px] font-bold text-blue-400 uppercase tracking-tighter">WTT常规挑战赛太原站</span>
+<span class="text-[10px] text-slate-400">2024</span>
+</div>
+<h4 class="text-sm font-bold text-slate-700 mb-1">男双冠军</h4>
+<div class="mt-1 flex justify-center">
+<img src="https://r2.ddgymy.dpdns.org/PicGo/2024lgy太原.webp" class="h-60 w-auto rounded-lg object-contain shadow-sm" alt="Lin Gaoyuan WTT Taiyuan">
+</div>
+</div>
+<div class="achievement-card p-2 rounded-xl">
+<div class="flex items-start justify-between mb-2">
+<span class="text-[10px] font-bold text-blue-400 uppercase tracking-tighter">北京WTT大满贯</span>
+<span class="text-[10px] text-slate-400">2024</span>
+</div>
+<h4 class="text-sm font-bold text-slate-700 mb-1">男双混双亚军</h4>
+<div class="mt-1 flex justify-center">
+<img src="https://r2.ddgymy.dpdns.org/PicGo/2024lgy北满.webp" class="h-60 w-auto rounded-lg object-contain shadow-sm" alt="Lin Gaoyuan Beijing WTT">
+</div>
+</div>
+</div>
+<div class="space-y-4 pt-12">
+<div class="achievement-card p-2 rounded-xl">
+<div class="flex items-start justify-between mb-1">
+<span class="text-[10px] font-bold text-purple-400 uppercase">福冈WTT总决赛</span>
+<span class="text-[10px] text-slate-400">2024</span>
+</div>
+<h4 class="text-sm font-bold text-slate-700">女单冠军</h4>
+<div class="mt-1 flex justify-center">
+<img src="https://r2.ddgymy.dpdns.org/PicGo/2024福冈.webp" class="h-60 w-auto rounded-lg object-contain shadow-sm" alt="Wang Manyu Fukuoka WTT">
+</div>
+</div>
+<div class="achievement-card p-2 rounded-xl">
+<div class="flex items-start justify-between mb-1">
+<span class="text-[10px] font-bold text-purple-400 uppercase">法国巴黎奥运会</span>
+<span class="text-[10px] text-slate-400">2024</span>
+</div>
+<h4 class="text-sm font-bold text-slate-700">女团冠军</h4>
+<div class="mt-1 flex justify-center">
+<img src="https://r2.ddgymy.dpdns.org/PicGo/2024奥运.webp" class="h-60 w-auto rounded-lg object-contain shadow-sm" alt="Wang Manyu Paris Olympics">
+</div>
+</div>
+<div class="achievement-card p-2 rounded-xl">
+<div class="flex items-start justify-between mb-1">
+<span class="text-[10px] font-bold text-purple-400 uppercase">新加坡WTT大满贯</span>
+<span class="text-[10px] text-slate-400">2024</span>
+</div>
+<h4 class="text-sm font-bold text-slate-700">女单女双冠军</h4>
+<div class="mt-1 flex justify-center">
+<img src="https://r2.ddgymy.dpdns.org/PicGo/2024wmy新加坡.webp" class="h-60 w-auto rounded-lg object-contain shadow-sm" alt="Wang Manyu Singapore WTT">
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="relative pt-8 pb-12" id="year-2023">
+<div class="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 z-30">
+<div class="px-4 py-1 rounded-full bg-indigo-400 text-white font-display font-bold text-sm shadow-lg border-2 border-white flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">auto_awesome</span>
+                        2023
+                    </div>
+</div>
+<div class="grid grid-cols-2 gap-24 relative">
+<div class="space-y-4 pt-8">
+<div class="achievement-card p-2 rounded-xl">
+<div class="flex items-start justify-between mb-1">
+<span class="text-[10px] font-bold text-blue-400 uppercase">杭州亚运会</span>
+<span class="text-[10px] text-slate-400">2023</span>
+</div>
+<h4 class="text-sm font-bold text-slate-700">男团冠军混双亚军</h4>
+<div class="mt-1 flex justify-center">
+<img src="https://r2.ddgymy.dpdns.org/PicGo/2023lgy亚运.webp" class="h-60 w-auto rounded-lg object-contain shadow-sm" alt="Lin Gaoyuan Asian Games">
+</div>
+</div>
+<div class="achievement-card p-2 rounded-xl">
+<div class="flex items-start justify-between mb-1">
+<span class="text-[10px] font-bold text-blue-400 uppercase">平昌亚锦赛</span>
+<span class="text-[10px] text-slate-400">2023</span>
+</div>
+<h4 class="text-sm font-bold text-slate-700">男团男双混双冠军</h4>
+<div class="mt-1 flex justify-center">
+<img src="https://r2.ddgymy.dpdns.org/PicGo/2023lgy平昌.webp" class="h-60 w-auto rounded-lg object-contain shadow-sm" alt="Lin Gaoyuan Asian Championships">
+</div>
+</div>
+<div class="achievement-card p-2 rounded-xl">
+<div class="flex items-start justify-between mb-1">
+<span class="text-[10px] font-bold text-blue-400 uppercase">WTT球星挑战赛曼谷站</span>
+<span class="text-[10px] text-slate-400">2023</span>
+</div>
+<h4 class="text-sm font-bold text-slate-700">男单男双混双冠军</h4>
+<div class="mt-1 flex justify-center">
+<img src="https://r2.ddgymy.dpdns.org/PicGo/2023lgy曼谷.webp" class="h-60 w-auto rounded-lg object-contain shadow-sm" alt="Lin Gaoyuan Bangkok WTT">
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="achievement-card p-2 rounded-xl">
+<div class="flex items-start justify-between mb-1">
+<span class="text-[10px] font-bold text-purple-400 uppercase">WTT常规挑战赛太原站</span>
+<span class="text-[10px] text-slate-400">2023</span>
+</div>
+<h4 class="text-sm font-bold text-slate-700">女单冠军</h4>
+<div class="mt-1 flex justify-center">
+<img src="https://r2.ddgymy.dpdns.org/PicGo/2023wmy太原.webp" class="h-60 w-auto rounded-lg object-contain shadow-sm" alt="Wang Manyu WTT Taiyuan">
+</div>
+</div>
+<div class="achievement-card p-2 rounded-xl">
+<div class="flex items-start justify-between mb-1">
+<span class="text-[10px] font-bold text-purple-400 uppercase">平昌亚锦赛</span>
+<span class="text-[10px] text-slate-400">2023</span>
+</div>
+<h4 class="text-sm font-bold text-slate-700">女单女双女团冠军</h4>
+<div class="mt-1 flex justify-center">
+<img src="https://r2.ddgymy.dpdns.org/PicGo/2023wmy平昌.webp" class="h-60 w-auto rounded-lg object-contain shadow-sm" alt="Wang Manyu Pyeongchang">
+</div>
+</div>
+<div class="achievement-card p-2 rounded-xl">
+<div class="flex items-start justify-between mb-1">
+<span class="text-[10px] font-bold text-purple-400 uppercase">WTT澳门冠军赛</span>
+<span class="text-[10px] text-slate-400">2023</span>
+</div>
+<h4 class="text-sm font-bold text-slate-700">女单冠军</h4>
+<div class="mt-1 flex justify-center">
+<img src="https://r2.ddgymy.dpdns.org/PicGo/2023wmy澳门.webp" class="h-60 w-auto rounded-lg object-contain shadow-sm" alt="Wang Manyu WTT Macao">
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="relative pt-8 pb-12" id="year-2022">
+<div class="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 z-30">
+<div class="px-4 py-1 rounded-full bg-indigo-300 text-white font-display font-bold text-sm shadow-lg border-2 border-white flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">auto_awesome_motion</span>
+                        2022
+                    </div>
+</div>
+<div class="grid grid-cols-2 gap-24 relative">
+<div class="space-y-4">
+<div class="achievement-card p-4 rounded-xl">
+<div class="flex items-start justify-between mb-1">
+<span class="text-[10px] font-bold text-blue-400 uppercase">黄石全锦赛</span>
+<span class="text-[10px] text-slate-400">2022</span>
+</div>
+<h4 class="text-sm font-bold text-slate-700">男双混双冠军</h4>
+<div class="mt-1 flex justify-center">
+<img src="https://r2.ddgymy.dpdns.org/PicGo/2022lgy黄石.webp" class="h-60 w-auto rounded-lg object-contain shadow-sm" alt="Lin Gaoyuan Huangshi">
+</div>
+</div>
+<div class="achievement-card p-4 rounded-xl">
+<div class="flex items-start justify-between mb-1">
+<span class="text-[10px] font-bold text-blue-400 uppercase">布达佩斯WTT冠军赛</span>
+<span class="text-[10px] text-slate-400">2022</span>
+</div>
+<h4 class="text-sm font-bold text-slate-700">男单亚军</h4>
+<div class="mt-1 flex justify-center">
+<img src="https://r2.ddgymy.dpdns.org/PicGo/2022lgy布达佩斯.webp" class="h-60 w-auto rounded-lg object-contain shadow-sm" alt="Lin Gaoyuan Budapest">
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="achievement-card p-4 rounded-xl">
+<div class="flex items-start justify-between mb-1">
+<span class="text-[10px] font-bold text-purple-400 uppercase">布达佩斯WTT冠军赛</span>
+<span class="text-[10px] text-slate-400">2022</span>
+</div>
+<h4 class="text-sm font-bold text-slate-700">女单冠军</h4>
+<div class="mt-1 flex justify-center">
+<img src="https://r2.ddgymy.dpdns.org/PicGo/2022wmy布达佩斯.webp" class="h-60 w-auto rounded-lg object-contain shadow-sm" alt="Wang Manyu Budapest">
+</div>
+</div>
+<div class="achievement-card p-4 rounded-xl">
+<div class="flex items-start justify-between mb-1">
+<span class="text-[10px] font-bold text-purple-400 uppercase">新加坡WTT大满贯</span>
+<span class="text-[10px] text-slate-400">2022</span>
+</div>
+<h4 class="text-sm font-bold text-slate-700">女双冠军</h4>
+<div class="mt-1 flex justify-center">
+<img src="https://r2.ddgymy.dpdns.org/PicGo/2022wmy新加坡.webp" class="h-60 w-auto rounded-lg object-contain shadow-sm" alt="Wang Manyu Singapore">
+</div>
+</div>
+</div>
+</div>
+</section>
+ 
+</div>
+<div class="mt-20 p-8 rounded-[2rem] bg-white/40 backdrop-blur-xl border-4 border-white relative overflow-hidden shadow-xl text-center">
+<div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+<span class="material-symbols-outlined absolute top-4 left-10 text-indigo-400 text-4xl">star</span>
+<span class="material-symbols-outlined absolute bottom-4 right-10 text-purple-400 text-4xl">favorite</span>
+</div>
+<h4 class="text-xl md:text-2xl font-display font-bold text-indigo-800 italic mb-6">
+                "不论遇到什么困难，信念可以支持一个人"
+            </h4>
+<div class="flex justify-center gap-4">
+<button class="bg-indigo-400 hover:bg-indigo-500 text-white px-8 py-3 rounded-full text-sm font-bold transition-all shadow-md">
+                    我不想成为谁 我想成为我自己
+                </button>
+<button class="bg-white/60 hover:bg-white text-indigo-500 border border-white px-8 py-3 rounded-full text-sm font-bold transition-all">
+                    我目光所及 皆为广袤天空 ✨
+                </button>
+</div>
+</div>
+</main>
+<footer class="py-10 bg-white/20 backdrop-blur-sm border-t border-white/40">
+<div class="max-w-[1300px] mx-auto px-10 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-3">
+<div class="size-7 rounded-full bg-white flex items-center justify-center">
+<span class="material-symbols-outlined text-indigo-400 text-sm">favorite</span>
+</div>
+<span class="text-slate-500 text-xs font-medium">© 2024 Celestial Fan Community. Redesigned with magic.</span>
+</div>
+<div class="flex items-center gap-6">
+<a class="text-indigo-300 hover:text-indigo-500 transition-colors" href="#"><span class="material-symbols-outlined text-lg">auto_awesome</span></a>
+<a class="text-indigo-300 hover:text-indigo-500 transition-colors" href="#"><span class="material-symbols-outlined text-lg">nest_eco_leaf</span></a>
+<a class="text-indigo-300 hover:text-indigo-500 transition-colors" href="#"><span class="material-symbols-outlined text-lg">flutter_dash</span></a>
+</div>
+</div>
+</footer>
+</div>
+
+</body>
+<!-- Mobile Menu Overlay -->
+<div id="mobile-menu" class="fixed inset-0 bg-white/95 backdrop-blur-xl z-[150] hidden flex-col items-center justify-center gap-8 transition-all duration-300 opacity-0 pointer-events-none">
+    <button id="close-menu-btn" class="absolute top-6 right-6 text-slate-500 hover:text-indigo-600">
+        <span class="material-symbols-outlined text-4xl">close</span>
+    </button>
+    <a class="text-slate-500 hover:text-indigo-600 text-2xl font-bold transition-colors" href="index.html">Home</a>
+    <a class="text-indigo-600 text-2xl font-black border-b-2 border-indigo-400" href="timeline.html">Timeline</a>
+    <a class="text-slate-500 hover:text-indigo-600 text-2xl font-bold transition-colors" href="journey.html">Journey</a>
+    <a class="text-slate-500 hover:text-indigo-600 text-2xl font-bold transition-colors" href="brands.html">Gallery</a>
+    <a class="text-slate-500 hover:text-indigo-600 text-2xl font-bold transition-colors" href="pets.html">Pets</a>
+</div>
+
+<script>
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const closeBtn = document.getElementById('close-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    function toggleMenu() {
+        const isHidden = mobileMenu.classList.contains('hidden');
+        if (isHidden) {
+            mobileMenu.classList.remove('hidden');
+            setTimeout(() => {
+                mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+            }, 10);
+        } else {
+            mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                mobileMenu.classList.add('hidden');
+            }, 300);
+        }
+    }
+
+    if(mobileBtn) mobileBtn.addEventListener('click', toggleMenu);
+    if(closeBtn) closeBtn.addEventListener('click', toggleMenu);
+</script>
+</html>

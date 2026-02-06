@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lin &amp; Wang - Dreamy Brand Galaxy</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1337ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101322",
+                        "dreamy-blue": "#e0e7ff",
+                        "dreamy-purple": "#f5f3ff",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .starlight-glow {
+            box-shadow: 0 0 15px 2px rgba(19, 55, 236, 0.3);
+        }
+        .dreamy-card-shadow {
+            box-shadow: 0 10px 25px -5px rgba(19, 55, 236, 0.1), 0 8px 10px -6px rgba(139, 92, 246, 0.1);
+        }
+        .bg-dreamy-gradient {
+            background: linear-gradient(135deg, #f0f4ff 0%, #f8f0ff 100%);
+        }
+        .dark .bg-dreamy-gradient {
+            background: linear-gradient(135deg, #101322 0%, #1a152e 100%);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111218] dark:text-white transition-colors duration-300">
+<div class="relative min-h-screen bg-dreamy-gradient overflow-x-hidden">
+<!-- Decorative Floating Elements (Clouds/Sparkles) -->
+<div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+<div class="absolute top-20 left-[10%] opacity-40 blur-2xl w-64 h-64 bg-primary/10 rounded-full"></div>
+<div class="absolute bottom-40 right-[15%] opacity-40 blur-3xl w-96 h-96 bg-purple-400/10 rounded-full"></div>
+<span class="material-symbols-outlined absolute top-40 left-[5%] text-primary/30 text-3xl">flare</span>
+<span class="material-symbols-outlined absolute top-80 right-[8%] text-purple-400/30 text-2xl">auto_awesome</span>
+<span class="material-symbols-outlined absolute bottom-1/4 left-1/4 text-primary/20 text-4xl">star_rate</span>
+</div>
+<div class="relative z-10 layout-container flex flex-col">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-primary/10 bg-white/70 dark:bg-background-dark/70 backdrop-blur-md px-6 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-xl">temp_preferences_custom</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">L &amp; W Fan Galaxy</h2>
+</div>
+<nav class="hidden md:flex items-center gap-9">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="index.html">基本信息</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="timeline.html">成就与荣誉</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="journey.html">星光路径</a>
+<a class="text-sm font-semibold border-b-2 border-primary" href="brands.html">品牌代言</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="pets.html">萌宠</a>
+</nav>
+
+<!-- Mobile Menu Button -->
+<button id="mobile-menu-btn" class="md:hidden text-primary p-2 ml-auto mr-4">
+    <span class="material-symbols-outlined text-3xl">menu</span>
+</button>
+</div>
+<div class="flex flex-1 justify-end gap-4 items-center">
+<label class="hidden sm:flex flex-col min-w-40 h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-xl h-full">
+<div class="text-[#616889] flex border-none bg-primary/5 items-center justify-center pl-4 rounded-l-xl">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-primary/5 focus:ring-0 h-full placeholder:text-[#616889] px-4 rounded-r-xl text-sm" placeholder="Search brands..." value=""/>
+</div>
+</label>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-xl size-10 bg-primary/10 text-primary hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+<button class="flex items-center justify-center rounded-xl size-10 bg-primary/10 text-primary hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined">person</span>
+</button>
+</div>
+</div>
+</header>
+<main class="max-w-[1280px] mx-auto w-full px-4 lg:px-8 py-8">
+<!-- Page Heading -->
+<div class="flex flex-col items-center text-center gap-4 mb-12">
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+<span class="material-symbols-outlined text-sm">stars</span>
+<span>Lin&Wang的商业代言</span>
+</div>
+<h1 class="text-4xl md:text-5xl font-black tracking-tight dark:text-white">Commercial</h1>
+<p class="text-gray-600 dark:text-gray-400 max-w-2xl text-lg">以下是品牌展示</p>
+</div>
+<div class="max-w-5xl mx-auto relative">
+<!-- Vertical Axis (Starlight River) -->
+<div class="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-primary/30 via-purple-400/30 to-primary/30 hidden md:block">
+<div class="absolute inset-0 w-full bg-primary/10 blur-sm"></div>
+</div>
+<div class="space-y-12 relative">
+
+<!-- DOUBLE FISH (LGY) -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div class="md:text-right pr-4 md:pr-12">
+<div class="flex flex-col items-end gap-2 mb-4">
+<span class="text-primary font-bold text-sm tracking-widest uppercase">03.21</span>
+<h3 class="text-2xl font-bold">DOUBLE FISH</h3>
+<p class="text-sm font-bold text-gray-500">双鱼品牌代言人</p>
+</div>
+<div class="max-w-sm ml-auto">
+<img class="h-60 w-auto object-contain rounded-lg mx-auto block shadow-sm" src="https://r2.ddgymy.dpdns.org/PicGo/双鱼.webp" alt="DOUBLE FISH"/>
+</div>
+</div>
+<div class="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center z-20">
+<div class="size-4 rounded-full bg-white dark:bg-background-dark border-4 border-primary shadow-lg"></div>
+</div>
+<div></div>
+</div>
+
+
+
+<!-- ESTEE LAUDER (WMY) -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div></div>
+<div class="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center z-20">
+<div class="size-4 rounded-full bg-white dark:bg-background-dark border-4 border-purple-500 shadow-lg"></div>
+</div>
+<div class="md:text-left pl-4 md:pl-12">
+<div class="flex flex-col items-start gap-2 mb-4">
+<span class="text-purple-500 font-bold text-sm tracking-widest uppercase">05.29</span>
+<h3 class="text-2xl font-bold">ESTEE LAUDER</h3>
+<p class="text-sm font-bold text-gray-500">雅诗兰黛彩妆活力大使</p>
+</div>
+<div class="max-w-sm mr-auto">
+<img class="h-60 w-auto object-contain rounded-lg mx-auto block shadow-sm" src="https://r2.ddgymy.dpdns.org/PicGo/雅诗兰黛.webp" alt="ESTEE LAUDER"/>
+</div>
+</div>
+</div>
+
+
+
+<!-- LONGCHAMP (WMY) -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div></div>
+<div class="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center z-20">
+<div class="size-4 rounded-full bg-white dark:bg-background-dark border-4 border-purple-500 shadow-lg"></div>
+</div>
+<div class="md:text-left pl-4 md:pl-12">
+<div class="flex flex-col items-start gap-2 mb-4">
+<span class="text-purple-500 font-bold text-sm tracking-widest uppercase">06.03</span>
+<h3 class="text-2xl font-bold">LONGCHAMP</h3>
+<p class="text-sm font-bold text-gray-500">珑骧跃动大使</p>
+</div>
+<div class="max-w-sm mr-auto">
+<img class="h-60 w-auto object-contain rounded-lg mx-auto block shadow-sm" src="https://r2.ddgymy.dpdns.org/PicGo/珑骧.webp" alt="LONGCHAMP"/>
+</div>
+</div>
+</div>
+
+
+
+<!-- Kiehl's (LGY) -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div class="md:text-right pr-4 md:pr-12">
+<div class="flex flex-col items-end gap-2 mb-4">
+<span class="text-primary font-bold text-sm tracking-widest uppercase">06.06</span>
+<h3 class="text-2xl font-bold">Kiehl's</h3>
+<p class="text-sm font-bold text-gray-500">科颜氏品牌推荐官</p>
+</div>
+<div class="max-w-sm ml-auto">
+<img class="h-60 w-auto object-contain rounded-lg mx-auto block shadow-sm" src="https://r2.ddgymy.dpdns.org/PicGo/科颜氏.webp" alt="Kiehl's"/>
+</div>
+</div>
+<div class="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center z-20">
+<div class="size-4 rounded-full bg-white dark:bg-background-dark border-4 border-primary shadow-lg"></div>
+</div>
+<div></div>
+</div>
+
+
+
+<!-- SUPER LIFE (WMY) -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div></div>
+<div class="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center z-20">
+<div class="size-4 rounded-full bg-white dark:bg-background-dark border-4 border-purple-500 shadow-lg"></div>
+</div>
+<div class="md:text-left pl-4 md:pl-12">
+<div class="flex flex-col items-start gap-2 mb-4">
+<span class="text-purple-500 font-bold text-sm tracking-widest uppercase">07.18</span>
+<h3 class="text-2xl font-bold">SUPER LIFE</h3>
+<p class="text-sm font-bold text-gray-500">光合植造品牌代言人</p>
+</div>
+<div class="max-w-sm mr-auto">
+<img class="h-60 w-auto object-contain rounded-lg mx-auto block shadow-sm" src="https://r2.ddgymy.dpdns.org/PicGo/光合植造.webp" alt="SUPER LIFE"/>
+</div>
+</div>
+</div>
+
+
+
+<!-- WINONA (LGY) -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div class="md:text-right pr-4 md:pr-12">
+<div class="flex flex-col items-end gap-2 mb-4">
+<span class="text-primary font-bold text-sm tracking-widest uppercase">07.24</span>
+<h3 class="text-2xl font-bold">WINONA</h3>
+<p class="text-sm font-bold text-gray-500">薇诺娜品牌大使</p>
+</div>
+<div class="max-w-sm ml-auto">
+<img class="h-60 w-auto object-contain rounded-lg mx-auto block shadow-sm" src="https://r2.ddgymy.dpdns.org/PicGo/薇诺娜.webp" alt="WINONA"/>
+</div>
+</div>
+<div class="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center z-20">
+<div class="size-4 rounded-full bg-white dark:bg-background-dark border-4 border-primary shadow-lg"></div>
+</div>
+<div></div>
+</div>
+
+
+
+<!-- C咖 (LGY) -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div class="md:text-right pr-4 md:pr-12">
+<div class="flex flex-col items-end gap-2 mb-4">
+<span class="text-primary font-bold text-sm tracking-widest uppercase">07.29</span>
+<h3 class="text-2xl font-bold">C咖</h3>
+<p class="text-sm font-bold text-gray-500">C咖清洁冠军大使</p>
+</div>
+<div class="max-w-sm ml-auto">
+<img class="h-60 w-auto object-contain rounded-lg mx-auto block shadow-sm" src="https://r2.ddgymy.dpdns.org/PicGo/c咖.webp" alt="C咖"/>
+</div>
+</div>
+<div class="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center z-20">
+<div class="size-4 rounded-full bg-white dark:bg-background-dark border-4 border-primary shadow-lg"></div>
+</div>
+<div></div>
+</div>
+
+
+
+<!-- XIAODU (WMY) -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div></div>
+<div class="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center z-20">
+<div class="size-4 rounded-full bg-white dark:bg-background-dark border-4 border-purple-500 shadow-lg"></div>
+</div>
+<div class="md:text-left pl-4 md:pl-12">
+<div class="flex flex-col items-start gap-2 mb-4">
+<span class="text-purple-500 font-bold text-sm tracking-widest uppercase">08.03</span>
+<h3 class="text-2xl font-bold">XIAODU</h3>
+<p class="text-sm font-bold text-gray-500">小度耳机全球代言人</p>
+</div>
+<div class="max-w-sm mr-auto">
+<img class="h-60 w-auto object-contain rounded-lg mx-auto block shadow-sm" src="https://r2.ddgymy.dpdns.org/PicGo/小度耳机.webp" alt="XIAODU"/>
+</div>
+</div>
+</div>
+
+
+
+<!-- MAKE UP FOR EVER (LGY) -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div class="md:text-right pr-4 md:pr-12">
+<div class="flex flex-col items-end gap-2 mb-4">
+<span class="text-primary font-bold text-sm tracking-widest uppercase">08.13</span>
+<h3 class="text-2xl font-bold">MAKE UP FOR EVER</h3>
+<p class="text-sm font-bold text-gray-500">玫珂菲底妆活力大使</p>
+</div>
+<div class="max-w-sm ml-auto">
+<img class="h-60 w-auto object-contain rounded-lg mx-auto block shadow-sm" src="https://r2.ddgymy.dpdns.org/PicGo/玫珂菲.webp" alt="MAKE UP FOR EVER"/>
+</div>
+</div>
+<div class="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center z-20">
+<div class="size-4 rounded-full bg-white dark:bg-background-dark border-4 border-primary shadow-lg"></div>
+</div>
+<div></div>
+</div>
+
+
+
+<!-- Dr.Jart+ (LGY) -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div class="md:text-right pr-4 md:pr-12">
+<div class="flex flex-col items-end gap-2 mb-4">
+<span class="text-primary font-bold text-sm tracking-widest uppercase">08.28</span>
+<h3 class="text-2xl font-bold">Dr.Jart+</h3>
+<p class="text-sm font-bold text-gray-500">蒂佳婷实力大使</p>
+</div>
+<div class="max-w-sm ml-auto">
+<img class="h-60 w-auto object-contain rounded-lg mx-auto block shadow-sm" src="https://r2.ddgymy.dpdns.org/PicGo/蒂佳婷.webp" alt="Dr.Jart+"/>
+</div>
+</div>
+<div class="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center z-20">
+<div class="size-4 rounded-full bg-white dark:bg-background-dark border-4 border-primary shadow-lg"></div>
+</div>
+<div></div>
+</div>
+
+
+
+<!-- SOFY (WMY) -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div></div>
+<div class="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center z-20">
+<div class="size-4 rounded-full bg-white dark:bg-background-dark border-4 border-purple-500 shadow-lg"></div>
+</div>
+<div class="md:text-left pl-4 md:pl-12">
+<div class="flex flex-col items-start gap-2 mb-4">
+<span class="text-purple-500 font-bold text-sm tracking-widest uppercase">08.28</span>
+<h3 class="text-2xl font-bold">SOFY</h3>
+<p class="text-sm font-bold text-gray-500">苏菲实力品牌代言人</p>
+</div>
+<div class="max-w-sm mr-auto">
+<img class="h-60 w-auto object-contain rounded-lg mx-auto block shadow-sm" src="https://r2.ddgymy.dpdns.org/PicGo/苏菲.webp" alt="SOFY"/>
+</div>
+</div>
+</div>
+
+
+
+<!-- PECHOIN (WMY) -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div></div>
+<div class="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center z-20">
+<div class="size-4 rounded-full bg-white dark:bg-background-dark border-4 border-purple-500 shadow-lg"></div>
+</div>
+<div class="md:text-left pl-4 md:pl-12">
+<div class="flex flex-col items-start gap-2 mb-4">
+<span class="text-purple-500 font-bold text-sm tracking-widest uppercase">09.05</span>
+<h3 class="text-2xl font-bold">PECHOIN</h3>
+<p class="text-sm font-bold text-gray-500">百雀羚灵动代言人</p>
+</div>
+<div class="max-w-sm mr-auto">
+<img class="h-60 w-auto object-contain rounded-lg mx-auto block shadow-sm" src="https://r2.ddgymy.dpdns.org/PicGo/百雀羚.webp" alt="PECHOIN"/>
+</div>
+</div>
+</div>
+
+
+
+<!-- JOYOUNG (WMY) -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div></div>
+<div class="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center z-20">
+<div class="size-4 rounded-full bg-white dark:bg-background-dark border-4 border-purple-500 shadow-lg"></div>
+</div>
+<div class="md:text-left pl-4 md:pl-12">
+<div class="flex flex-col items-start gap-2 mb-4">
+<span class="text-purple-500 font-bold text-sm tracking-widest uppercase">09.13</span>
+<h3 class="text-2xl font-bold">JOYOUNG</h3>
+<p class="text-sm font-bold text-gray-500">九阳豆浆品牌代言人</p>
+</div>
+<div class="max-w-sm mr-auto">
+<img class="aspect-[21/9] w-full object-cover rounded-lg" src="https://r2.ddgymy.dpdns.org/PicGo/九阳豆浆.webp" alt="JOYOUNG"/>
+</div>
+</div>
+</div>
+
+
+
+<!-- ddg (LGY) -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div class="md:text-right pr-4 md:pr-12">
+<div class="flex flex-col items-end gap-2 mb-4">
+<span class="text-primary font-bold text-sm tracking-widest uppercase">09.17</span>
+<h3 class="text-2xl font-bold">ddg</h3>
+<p class="text-sm font-bold text-gray-500">ddg品牌卸妆大使</p>
+</div>
+<div class="max-w-sm ml-auto">
+<img class="h-60 w-auto object-contain rounded-lg mx-auto block shadow-sm" src="https://r2.ddgymy.dpdns.org/PicGo/ddg.webp" alt="ddg"/>
+</div>
+</div>
+<div class="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center z-20">
+<div class="size-4 rounded-full bg-white dark:bg-background-dark border-4 border-primary shadow-lg"></div>
+</div>
+<div></div>
+</div>
+
+
+
+<!-- Watercome (LGY) -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div class="md:text-right pr-4 md:pr-12">
+<div class="flex flex-col items-end gap-2 mb-4">
+<span class="text-primary font-bold text-sm tracking-widest uppercase">09.23</span>
+<h3 class="text-2xl font-bold">Watercome</h3>
+<p class="text-sm font-bold text-gray-500">水之蔻品牌大使</p>
+</div>
+<div class="max-w-sm ml-auto">
+<img class="h-60 w-auto object-contain rounded-lg mx-auto block shadow-sm" src="https://r2.ddgymy.dpdns.org/PicGo/水之蔻.webp" alt="Watercome"/>
+</div>
+</div>
+<div class="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center z-20">
+<div class="size-4 rounded-full bg-white dark:bg-background-dark border-4 border-primary shadow-lg"></div>
+</div>
+<div></div>
+</div>
+
+
+
+<!-- VOOLGA (WMY) -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div></div>
+<div class="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center z-20">
+<div class="size-4 rounded-full bg-white dark:bg-background-dark border-4 border-purple-500 shadow-lg"></div>
+</div>
+<div class="md:text-left pl-4 md:pl-12">
+<div class="flex flex-col items-start gap-2 mb-4">
+<span class="text-purple-500 font-bold text-sm tracking-widest uppercase">09.24</span>
+<h3 class="text-2xl font-bold">VOOLGA</h3>
+<p class="text-sm font-bold text-gray-500">敷尔佳品牌代言人</p>
+</div>
+<div class="max-w-sm mr-auto">
+<img class="h-60 w-auto object-contain rounded-lg mx-auto block shadow-sm" src="https://r2.ddgymy.dpdns.org/PicGo/敷尔佳.webp" alt="VOOLGA"/>
+</div>
+</div>
+</div>
+
+
+
+<!-- a2 (WMY) -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div></div>
+<div class="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center z-20">
+<div class="size-4 rounded-full bg-white dark:bg-background-dark border-4 border-purple-500 shadow-lg"></div>
+</div>
+<div class="md:text-left pl-4 md:pl-12">
+<div class="flex flex-col items-start gap-2 mb-4">
+<span class="text-purple-500 font-bold text-sm tracking-widest uppercase">10.07</span>
+<h3 class="text-2xl font-bold">a2</h3>
+<p class="text-sm font-bold text-gray-500">a2品牌推广大使</p>
+</div>
+<div class="max-w-sm mr-auto">
+<img class="aspect-[21/9] w-full object-cover rounded-lg" src="https://r2.ddgymy.dpdns.org/PicGo/a2.webp" alt="a2"/>
+</div>
+</div>
+</div>
+
+
+
+<!-- Leader (LGY) -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div class="md:text-right pr-4 md:pr-12">
+<div class="flex flex-col items-end gap-2 mb-4">
+<span class="text-primary font-bold text-sm tracking-widest uppercase">10.14</span>
+<h3 class="text-2xl font-bold">Leader</h3>
+<p class="text-sm font-bold text-gray-500">Leader统帅品牌大使</p>
+</div>
+<div class="max-w-sm ml-auto">
+<img class="h-60 w-auto object-contain rounded-lg mx-auto block shadow-sm" src="https://r2.ddgymy.dpdns.org/PicGo/Leader.webp" alt="Leader"/>
+</div>
+</div>
+<div class="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center z-20">
+<div class="size-4 rounded-full bg-white dark:bg-background-dark border-4 border-primary shadow-lg"></div>
+</div>
+<div></div>
+</div>
+
+
+
+<!-- SUPER MILD (WMY) -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div></div>
+<div class="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center z-20">
+<div class="size-4 rounded-full bg-white dark:bg-background-dark border-4 border-purple-500 shadow-lg"></div>
+</div>
+<div class="md:text-left pl-4 md:pl-12">
+<div class="flex flex-col items-start gap-2 mb-4">
+<span class="text-purple-500 font-bold text-sm tracking-widest uppercase">10.20</span>
+<h3 class="text-2xl font-bold">SUPER MILD</h3>
+<p class="text-sm font-bold text-gray-500">惠润品牌代言人</p>
+</div>
+<div class="max-w-sm mr-auto">
+<img class="h-60 w-auto object-contain rounded-lg mx-auto block shadow-sm" src="https://r2.ddgymy.dpdns.org/PicGo/惠润.webp" alt="SUPER MILD"/>
+</div>
+</div>
+</div>
+
+
+
+<!-- 珍视明 (LGY) -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div class="md:text-right pr-4 md:pr-12">
+<div class="flex flex-col items-end gap-2 mb-4">
+<span class="text-primary font-bold text-sm tracking-widest uppercase">10.23</span>
+<h3 class="text-2xl font-bold">珍视明</h3>
+<p class="text-sm font-bold text-gray-500">珍视明形象大使</p>
+</div>
+<div class="max-w-sm ml-auto">
+<img class="aspect-[21/9] w-full object-cover rounded-lg" src="https://r2.ddgymy.dpdns.org/PicGo/珍视明.webp" alt="珍视明"/>
+</div>
+</div>
+<div class="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center z-20">
+<div class="size-4 rounded-full bg-white dark:bg-background-dark border-4 border-primary shadow-lg"></div>
+</div>
+<div></div>
+</div>
+
+
+
+<!-- RIPSTAR (LGY) -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div class="md:text-right pr-4 md:pr-12">
+<div class="flex flex-col items-end gap-2 mb-4">
+<span class="text-primary font-bold text-sm tracking-widest uppercase">12.22</span>
+<h3 class="text-2xl font-bold">RIPSTAR</h3>
+<p class="text-sm font-bold text-gray-500">爆炸星品牌代言人</p>
+</div>
+<div class="max-w-sm ml-auto">
+<img class="aspect-[21/9] w-full object-cover rounded-lg" src="https://r2.ddgymy.dpdns.org/PicGo/爆炸星.webp" alt="RIPSTAR"/>
+</div>
+</div>
+<div class="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center z-20">
+<div class="size-4 rounded-full bg-white dark:bg-background-dark border-4 border-primary shadow-lg"></div>
+</div>
+<div></div>
+</div>
+
+
+
+<!-- PANTENE (LGY) -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div class="md:text-right pr-4 md:pr-12">
+<div class="flex flex-col items-end gap-2 mb-4">
+<span class="text-primary font-bold text-sm tracking-widest uppercase">12.30</span>
+<h3 class="text-2xl font-bold">PANTENE</h3>
+<p class="text-sm font-bold text-gray-500">潘婷品牌大使</p>
+</div>
+<div class="max-w-sm ml-auto">
+<img class="h-60 w-auto object-contain rounded-lg mx-auto block shadow-sm" src="https://r2.ddgymy.dpdns.org/PicGo/潘婷.webp" alt="PANTENE"/>
+</div>
+</div>
+<div class="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center z-20">
+<div class="size-4 rounded-full bg-white dark:bg-background-dark border-4 border-primary shadow-lg"></div>
+</div>
+<div></div>
+</div>
+
+
+
+<!-- PANDORA (LGY) -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div class="md:text-right pr-4 md:pr-12">
+<div class="flex flex-col items-end gap-2 mb-4">
+<span class="text-primary font-bold text-sm tracking-widest uppercase">01.16</span>
+<h3 class="text-2xl font-bold">PANDORA</h3>
+<p class="text-sm font-bold text-gray-500">潘多拉品牌大使</p>
+</div>
+<div class="max-w-sm ml-auto">
+<img class="h-60 w-auto object-contain rounded-lg mx-auto block shadow-sm" src="https://r2.ddgymy.dpdns.org/PicGo/潘多拉.webp" alt="PANDORA"/>
+</div>
+</div>
+<div class="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center z-20">
+<div class="size-4 rounded-full bg-white dark:bg-background-dark border-4 border-primary shadow-lg"></div>
+</div>
+<div></div>
+</div>
+
+
+</div>
+</div>
+</div>
+<!-- Footer Section -->
+<footer class="mt-24 pt-12 border-t border-primary/10 flex flex-col md:flex-row justify-between items-center gap-6 pb-12">
+<div class="flex items-center gap-3">
+<div class="size-6 bg-primary rounded flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-sm">temp_preferences_custom</span>
+</div>
+<p class="text-sm font-bold text-gray-500">Lin &amp; Wang Fan Galaxy © 2024</p>
+</div>
+<div class="flex gap-6">
+<a class="text-gray-400 hover:text-primary" href="#"><span class="material-symbols-outlined">alternate_email</span></a>
+<a class="text-gray-400 hover:text-primary" href="#"><span class="material-symbols-outlined">photo_library</span></a>
+<a class="text-gray-400 hover:text-primary" href="#"><span class="material-symbols-outlined">forum</span></a>
+</div>
+</footer>
+</main>
+</div>
+</div>
+<!-- Mobile Menu Overlay -->
+<div id="mobile-menu" class="fixed inset-0 bg-white/95 dark:bg-background-dark/95 backdrop-blur-xl z-[100] hidden flex-col items-center justify-center gap-8 transition-all duration-300 opacity-0 pointer-events-none">
+    <button id="close-menu-btn" class="absolute top-6 right-6 text-gray-500 hover:text-primary">
+        <span class="material-symbols-outlined text-4xl">close</span>
+    </button>
+    <a class="text-gray-600 dark:text-gray-300 hover:text-primary text-2xl font-medium transition-colors" href="index.html">Home</a>
+    <a class="text-gray-600 dark:text-gray-300 hover:text-primary text-2xl font-medium transition-colors" href="timeline.html">Timeline</a>
+    <a class="text-gray-600 dark:text-gray-300 hover:text-primary text-2xl font-medium transition-colors" href="journey.html">Journey</a>
+    <a class="text-primary text-2xl font-semibold border-b-2 border-primary" href="brands.html">Gallery</a>
+    <a class="text-gray-600 dark:text-gray-300 hover:text-primary text-2xl font-medium transition-colors" href="pets.html">Pets</a>
+</div>
+
+<script>
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const closeBtn = document.getElementById('close-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    function toggleMenu() {
+        const isHidden = mobileMenu.classList.contains('hidden');
+        if (isHidden) {
+            mobileMenu.classList.remove('hidden');
+            setTimeout(() => {
+                mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+            }, 10);
+        } else {
+            mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                mobileMenu.classList.add('hidden');
+            }, 300);
+        }
+    }
+
+    if(mobileBtn) mobileBtn.addEventListener('click', toggleMenu);
+    if(closeBtn) closeBtn.addEventListener('click', toggleMenu);
+</script>
+</body></html>
