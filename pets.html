@@ -83,6 +83,8 @@
         }
     </script>
 </head>
+<!-- 引入 Supabase 上传数据库核心 -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <body class="text-[#4b5563] overflow-x-hidden">
 <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
 <span class="material-symbols-outlined floating-star text-4xl top-20 left-[10%] opacity-40">star</span>
@@ -108,6 +110,7 @@
     <a class="text-sm font-bold font-playful hover:text-purple-500 transition-colors" href="journey.html">星光路径</a>
     <a class="text-sm font-bold font-playful hover:text-purple-500 transition-colors" href="brands.html">品牌代言</a>
     <a class="bg-purple-100 text-purple-600 px-4 py-2 rounded-full text-sm font-bold font-playful shadow-inner" href="pets.html">萌宠</a>
+    <a class="text-sm font-bold font-playful hover:text-purple-500 transition-colors" href="寄语区.html">寄语区</a>
 </nav>
 
 <!-- Mobile Menu Button -->
@@ -389,21 +392,9 @@
 <div class="mb-6 inline-block p-4 bg-purple-100 rounded-full text-purple-500 shadow-inner">
 <span class="material-symbols-outlined text-5xl">auto_awesome</span>
 </div>
-<h3 class="text-3xl font-playful font-bold text-purple-600 mb-4">Add More Magic!</h3>
-<!-- 👇 在这里开始，添加我们的表单标签 -->
-<form name="pet-photo-upload" method="POST" data-netlify="true" enctype="multipart/form-data" id="petForm">
-  <!-- 👇 这是隐藏的文件选择器，放在最前面 -->
-  <input type="file" name="photo" accept="image/*" hidden id="photoInput">
-  
-  <!-- 👇 Netlify 必需的隐藏字段，放在表单最后 -->
-  <input type="hidden" name="form-name" value="pet-photo-upload">
-</form>
-<!-- 👇 这是成功提示框，放在表单后面 -->
-<div id="successMessage" style="display: none; margin-top: 20px; color: #4CAF50; text-align: center; font-weight: bold;">
-  ✅ 照片上传成功！感谢你的分享！
-</div>
-<p class="text-blue-500/80 font-medium mb-8 max-w-xl mx-auto text-lg italic">请上传更多猫猫图片吧！（远剑猫猫也可以哦）</p>
-<button id="submitBtn" class="bg-gradient-to-r from-purple-400 to-blue-400 text-white px-10 py-4 rounded-full font-playful font-bold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all flex items-center gap-3 mx-auto">
+<h3 class="text-3xl font-playful font-bold text-purple-600 mb-4">Add more Magic!</h3>
+<p class="text-blue-500/80 font-medium mb-8 max-w-xl mx-auto text-lg italic">请上传更多猫猫图片吧！</p>
+<button id="submitPhotoBtn" class="bg-gradient-to-r from-purple-400 to-blue-400 text-white px-10 py-4 rounded-full font-playful font-bold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all flex items-center gap-3 mx-auto">
 <span class="material-symbols-outlined">add_photo_alternate</span>
                         Submit a Photo
                     </button>
@@ -429,11 +420,11 @@
     <button id="close-menu-btn" class="absolute top-6 right-6 text-gray-500 hover:text-purple-600">
         <span class="material-symbols-outlined text-4xl">close</span>
     </button>
-    <a class="text-gray-600 hover:text-purple-500 text-2xl font-bold font-playful transition-colors" href="index.html">基本信息</a>
-    <a class="text-gray-600 hover:text-purple-500 text-2xl font-bold font-playful transition-colors" href="timeline.html">成就与荣耀</a>
-    <a class="text-gray-600 hover:text-purple-500 text-2xl font-bold font-playful transition-colors" href="journey.html">星光路径</a>
-    <a class="text-gray-600 hover:text-purple-500 text-2xl font-bold font-playful transition-colors" href="brands.html">品牌代言</a>
-    <a class="bg-purple-100 text-purple-600 px-8 py-3 rounded-full text-2xl font-bold font-playful shadow-inner" href="pets.html">萌宠</a>
+    <a class="text-gray-600 hover:text-purple-500 text-2xl font-bold font-playful transition-colors" href="index.html">Home</a>
+    <a class="text-gray-600 hover:text-purple-500 text-2xl font-bold font-playful transition-colors" href="timeline.html">Timeline</a>
+    <a class="text-gray-600 hover:text-purple-500 text-2xl font-bold font-playful transition-colors" href="journey.html">Journey</a>
+    <a class="text-gray-600 hover:text-purple-500 text-2xl font-bold font-playful transition-colors" href="brands.html">Gallery</a>
+    <a class="bg-purple-100 text-purple-600 px-8 py-3 rounded-full text-2xl font-bold font-playful shadow-inner" href="pets.html">Pets</a>
 </div>
 
 <script>
@@ -500,45 +491,69 @@
         }
     }
 </script>
-<!-- 👇 这是交互逻辑的 JavaScript，放在 </body> 结束标签之前 -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const submitBtn = document.getElementById('submitBtn');
-const photoInput = document.getElementById('photoInput');
-const petForm = document.getElementById('petForm');
-const successMessage = document.getElementById('successMessage');
+// 固定不动，我已经帮你填好
+const SUPABASE_URL = "https://oogswxneferluwmsljca.supabase.co";
+// 只填这里！复制你截图里的 sb_publishable_ 完整密钥
+const SUPABASE_KEY = "sb_publishable_cFt5KUP4IM6-umB52q5Yjw_vLTT9...";
 
-// 点击按钮触发文件选择
-submitBtn.addEventListener('click', () => {
-  photoInput.click();
+// 正确初始化，这是你之前失败的核心！
+const { createClient } = supabase;
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// 自动创建隐藏上传框
+const fileInput = document.createElement("input");
+fileInput.type = "file";
+fileInput.accept = "image/*";
+fileInput.style.display = "none";
+document.body.appendChild(fileInput);
+
+// 绑定你的按钮
+const submitBtn = document.getElementById("submitPhotoBtn");
+submitBtn.addEventListener("click", () => {
+    fileInput.click();
 });
 
-// 选择文件后提交表单
-photoInput.addEventListener('change', () => {
-  if (photoInput.files.length > 0) {
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<span class="material-symbols-outlined">hourglass_top</span> 上传中...';
-    
-    const formData = new FormData(petForm);
-    fetch('/', {
-      method: 'POST',
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams(formData).toString()
-    })
-    .then(() => {
-      submitBtn.innerHTML = '<span class="material-symbols-outlined">check_circle</span> 上传成功!';
-      successMessage.style.display = 'block';
-      setTimeout(() => {
-        successMessage.style.display = 'none';
-        submitBtn.innerHTML = '<span class="material-symbols-outlined">add_photo_alternate</span> Submit a Photo';
-        submitBtn.disabled = false;
-        photoInput.value = '';
-      }, 3000);
-    })
-    .catch(() => {
-      submitBtn.innerHTML = '<span class="material-symbols-outlined">error</span> 上传失败，请重试';
-      submitBtn.disabled = false;
-    });
-  }
+// 选择图片后上传 + 入库
+fileInput.addEventListener("change", async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // 唯一文件名
+    const fileName = `photo/${Date.now()}_${file.name}`;
+
+    // 1. 上传到 pet-photos 存储桶
+    const { error: uploadError } = await supabaseClient
+        .storage
+        .from("pet-photos")
+        .upload(fileName, file);
+
+    if (uploadError) {
+        alert("上传失败：" + uploadError.message);
+        return;
+    }
+
+    // 2. 获取公开图片链接
+    const { data: urlData } = supabaseClient
+        .storage
+        .from("pet-photos")
+        .getPublicUrl(fileName);
+
+    // 3. 写入数据库 photo_submit 表
+    const { error: insertError } = await supabaseClient
+        .from("photo_submit")
+        .insert([{
+            photo_url: urlData.publicUrl
+        }]);
+
+    if (insertError) {
+        alert("存库失败：" + insertError.message);
+        return;
+    }
+
+    // 成功弹窗
+    alert("✅ 上传成功！图片已经存入数据库！");
 });
 </script>
 </body></html>

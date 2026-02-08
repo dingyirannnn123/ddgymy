@@ -131,10 +131,10 @@
 <span class="material-icons text-cerulean text-sm">star</span>
 </div>
 <h1 class="text-4xl md:text-6xl font-extrabold gradient-text mb-4 drop-shadow-sm">
-        Dreamy Yuanman Wall
+        心愿墙
     </h1>
 <p class="text-lg opacity-90 max-w-2xl mx-auto leading-relaxed">
-        A dreamy blend of lavender and sky for <span class="text-cerulean dark:text-sky-300 font-bold">Lin Gaoyuan</span> &amp; <span class="text-primary dark:text-purple-400 font-bold">Wang Manyu</span>. Share your soft wishes!
+        The best wishes for <span class="text-cerulean dark:text-sky-300 font-bold">Lin Gaoyuan</span> &amp; <span class="text-primary dark:text-purple-400 font-bold">Wang Manyu</span>. 
     </p>
 </header>
 <main class="relative z-10 container mx-auto px-6 pb-32">
@@ -147,36 +147,38 @@
 <div class="w-10 h-10 bg-purple-500/10 rounded-full flex items-center justify-center">
 <span class="material-icons text-primary">edit</span>
 </div>
-<h2 class="font-bold text-lg text-primary">Share a Wish</h2>
+<h2 class="font-bold text-lg text-primary">Write</h2>
 </div>
 <form class="space-y-4">
 <div>
-<label class="block text-[10px] font-bold uppercase tracking-widest text-primary mb-1 ml-2">Nickname</label>
-<input class="input-kawaii" placeholder="e.g. Dreamy_Fan" type="text"/>
+<label id="nickname" class="block text-[10px] font-bold uppercase tracking-widest text-primary mb-1 ml-2">昵称</label>
+<input class="input-kawaii" placeholder="e.g." type="text"/>
 </div>
 <div>
-<label class="block text-[10px] font-bold uppercase tracking-widest text-primary mb-1 ml-2">Your Message</label>
+<label id="message" class="block text-[10px] font-bold uppercase tracking-widest text-primary mb-1 ml-2">寄语</label>
 <textarea class="input-kawaii resize-none" placeholder="Write something sweet..." rows="3"></textarea>
 </div>
 <div>
-<label class="block text-[10px] font-bold uppercase tracking-widest text-primary mb-1 ml-2">Add a Memory</label>
+<label id="uploadBtn" class="block text-[10px] font-bold uppercase tracking-widest text-primary mb-1 ml-2">附加</label>
 <label class="custom-file-upload">
 <span class="material-icons text-primary/60 text-2xl">photo_camera</span>
 <span class="text-[10px] font-medium text-slate-400">Upload Photo</span>
-<input class="hidden" type="file"/>
+<input id="fileInput" class="hidden" type="file"/>
 </label>
 </div>
 <div class="pt-2 flex justify-center">
 <button class="group relative flex items-center justify-center w-20 h-20 transition-all duration-300 hover:scale-110 active:scale-95" type="button">
 <div class="absolute inset-0 bg-primary/20 blur-lg rounded-full group-hover:bg-primary/40 transition-colors"></div>
 <div class="w-full h-full bg-gradient-to-br from-primary to-cerulean heart-btn flex items-center justify-center text-white relative z-10 shadow-lg">
-<span class="text-[10px] font-bold uppercase">Submit</span>
+<span id="submitBtn" class="text-[10px] font-bold uppercase">Submit</span>
 </div>
 </button>
 </div>
 </form>
 </div>
 </div>
+<!-- 就加这一行！放在你所有 masonry-item 卡片的最上面，作为渲染容器 -->
+<div id="wishList" class="masonry-item w-full"></div>
 <div class="masonry-item">
 <div class="kawaii-card bg-white/90 dark:bg-white/10 backdrop-blur-xl p-8 rounded-xl bubble-glow relative border-4 border-purple-50/50 dark:border-purple-900/20 shadow-sm">
 <div class="absolute -top-3 -right-3 flex gap-1">
@@ -188,15 +190,15 @@
 </div>
 <div class="flex items-center gap-3 mb-4">
 <div class="relative">
-<img alt="Cute fan profile" class="w-12 h-12 rounded-full border-4 border-purple-100 shadow-sm object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0VIb6ynmQvAhNwmM3w4wa2vttMuzGdW_8zVRNdYVbm5cOeA0j9pCU5jAPHCI0GMZC3JqMLiEn1LIaDuHrPo4XKH2zg2ZOUjLBG5gwdOEKS8smbYgS2jr9F8Fk74_wW_Ac21qUaH2qsgKgxKFY6D_hhGSpHa-YHd6jXBubgFhWGIe91R7CRqz6ET9uE0Lr9LRA_FRw4Cv4VbmOGuhrdf_QUnqwEZvhhrBtfj1R-HDNpPVlATmzWEjO7RW7Owr8wFbgKDxy9QeQJCRS"/>
+<img alt="Cute fan profile" class="w-12 h-12 rounded-full border-4 border-purple-100 shadow-sm object-cover" src="https://r2.ddgymy.dpdns.org/PicGo/矶抚2.webp"/>
 <div class="absolute -bottom-1 -right-1 text-xs">✨</div>
 </div>
 <div>
-<p class="font-bold text-sm text-primary dark:text-purple-300">Yuyu_Fan99</p>
+<p class="font-bold text-sm text-purple-600">jifu</p>
 <p class="text-[10px] opacity-60">2 hours ago</p>
 </div>
 </div>
-<p class="text-sm leading-relaxed italic text-slate-600 dark:text-slate-300">"Keep shining on the court, Manyu! Your spirit is so inspiring. Always cheering for you and Gaoyuan together!"</p>
+<p class="text-sm leading-relaxed text-gray-700"></p>
 </div>
 </div>
 <div class="masonry-item">
@@ -204,15 +206,14 @@
 <div class="absolute -top-4 -left-2 text-2xl">🦄</div>
 <div class="flex items-center gap-3 mb-4">
 <div class="relative">
-<img alt="Portrait of fan" class="w-12 h-12 rounded-full border-4 border-white shadow-sm object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaz9OXGqMRskqx7Mcseb-b0gv0Po0rYHuSkBoGi5o6f7Mu6Wb0afhB8qS9t1AWegtjEj7_caS-0cIAfj-2BO9etePgDlBtoiaeZZc47-aXnHTBg7h342N0fjhVSy8sLS1OJ1P722G2mUsXagUkQTwHGgrxXhPG4U0c9XiaIlH08hb-HVHobWyTNVUHBLwowYsAT38sEIT3TqohgNvbD0MptpwujLmk6Y1EtJLw-hMBr6E3eHB1FmMSGbF1bb04dYa8dJYjAdRXLGNu"/>
-<div class="absolute -bottom-1 -right-1 text-xs">💜</div>
+<img alt="Portrait of fan" class="w-12 h-12 rounded-full border-4 border-white shadow-sm object-cover" src="https://r2.ddgymy.dpdns.org/PicGo/貂蝉3.webp"/>
 </div>
 <div>
-<p class="font-bold text-sm text-cerulean dark:text-sky-300">GaoGaoLover</p>
+<p class="font-bold text-sm text-cerulean dark:text-sky-300"></p>
 <p class="text-[10px] opacity-60">5 hours ago</p>
 </div>
 </div>
-<p class="text-sm leading-relaxed">"Lin Gaoyuan's backhand is purely magical! 🪄 Love seeing the teamwork between you two. Stay healthy and happy!"</p>
+<p class="text-sm leading-relaxed"></p>
 </div>
 </div>
 <div class="masonry-item">
@@ -223,10 +224,10 @@
 </div>
 <div class="flex flex-col items-center text-center">
 <div class="relative mb-3">
-<img alt="Fan avatar" class="w-14 h-14 rounded-full border-4 border-white shadow-md object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAd1j2bP2o3F0ec84A-KVqEGQCmqDyVic7Lbjx94rrZfe5x8Qi14skZ6Qt5ugs9sc5tRK_gCL-shyzz8bi9xF_jbfIHZpWQxQSaH1aDZwN1daLvv07fUd2fAvletc7dFpDeKPJbDtyDJHqilBXoGdv6AJLbxcAIwYk5nNa3Xt7NQvP8wS3yJQ2omwCEChqVLkhu9JLx19zgSMY1FLjTmV7plUVbievQ8XEmJmXMvVEmJiJ9SfgYN5qch3IuN1lWFOdis3p7JQCOcoR6"/>
+<img alt="Fan avatar" class="w-14 h-14 rounded-full border-4 border-white shadow-md object-cover" src="https://r2.ddgymy.dpdns.org/PicGo/貂蝉2.webp"/>
 </div>
-<p class="font-bold text-sm mb-1 text-primary">StarryNight_</p>
-<p class="text-xs leading-relaxed">"The best duo in table tennis! Seeing you both smile is the highlight of my day. 🏓💎"</p>
+<p class="font-bold text-sm mb-1 text-primary"></p>
+<p class="text-xs leading-relaxed"></p>
 <div class="mt-4 flex gap-1">
 <span class="material-icons text-primary text-xs">star</span>
 <span class="material-icons text-cerulean text-xs">favorite</span>
@@ -239,13 +240,13 @@
 <div class="kawaii-card bg-gradient-to-br from-purple-50/80 to-sky-50/80 dark:from-purple-900/20 dark:to-blue-900/20 backdrop-blur-xl p-6 rounded-3xl bubble-glow relative overflow-hidden border-2 border-white/50">
 <div class="absolute top-0 right-0 w-16 h-16 bg-white/40 rounded-full -mr-8 -mt-8"></div>
 <div class="flex items-center gap-3 mb-4">
-<img alt="Artist fan" class="w-12 h-12 rounded-full border-4 border-white shadow-sm object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBf8gMvbBw3gKM7neYI4fEVzOif0FXuxL6V8hPJ5qHmK10In_NH6_eopv_Wy7WNqaHcHptruJRF-rNgChfB-v8BgIlcKlqbHfPvlpdncdUZCHzsouRm2KAZnuRSVZhdj1rxkXtWFiYEZlZWqhu6nhTGjQGXh3f-_BIHTqrcuGY-D55ACHClj3Y_2gIeilQkiPBMYCbvZmypPBx1wD-oAoHsDKs0CrohnIMy3rMHzGyRIXhKu4QreY5cgV4IcyRZwxuQhue_9WRXW-q_"/>
+<img alt="Artist fan" class="w-12 h-12 rounded-full border-4 border-white shadow-sm object-cover" src="https://r2.ddgymy.dpdns.org/PicGo/矶抚2.webp"/>
 <div>
-<p class="font-bold text-sm text-primary dark:text-purple-300">Mandy_Art</p>
+<p class="font-bold text-sm text-primary dark:text-purple-300"></p>
 <p class="text-[10px] opacity-60">Yesterday</p>
 </div>
 </div>
-<p class="text-sm">"I painted a small portrait of LGY and WMY today! Sending all my love from Brazil! 🇧🇷✨ You are the best!"</p>
+<p class="text-sm"></p>
 <div class="mt-4 flex items-center gap-2">
 <div class="px-2 py-1 bg-white/60 dark:bg-black/40 rounded-full text-[10px] font-bold text-cerulean border border-cerulean/20">#LGY</div>
 <div class="px-2 py-1 bg-white/60 dark:bg-black/40 rounded-full text-[10px] font-bold text-primary border border-primary/20">#WMY</div>
@@ -253,31 +254,14 @@
 </div>
 </div>
 <div class="masonry-item">
-<div class="kawaii-card bg-white/90 dark:bg-white/10 p-6 rounded-2xl bubble-glow border-l-4 border-primary shadow-lg">
-<div class="flex items-center justify-between mb-4">
-<div class="flex items-center gap-2">
-<div class="w-8 h-8 rounded-full bg-gradient-to-tr from-primary to-cerulean"></div>
-<p class="font-bold text-sm text-primary dark:text-purple-300">TableTennisKing</p>
-</div>
-<span class="material-icons text-sm opacity-30">push_pin</span>
-</div>
-<p class="text-sm mb-4">"The chemistry on the court is unmatched. Can't wait for the next tournament! 🏆"</p>
-<div class="flex -space-x-2">
-<div class="w-6 h-6 rounded-full border-2 border-white bg-purple-200"></div>
-<div class="w-6 h-6 rounded-full border-2 border-white bg-sky-200"></div>
-<div class="w-6 h-6 rounded-full border-2 border-white bg-primary/20"></div>
-</div>
-</div>
-</div>
-<div class="masonry-item">
 <div class="kawaii-card bg-purple-50/40 dark:bg-white/5 backdrop-blur-md p-6 rounded-xl bubble-glow border-dashed border-2 border-primary/40">
 <div class="flex items-center gap-2 mb-2">
 <span class="material-icons text-primary text-lg">edit</span>
-<p class="text-[10px] font-bold tracking-tighter uppercase opacity-50">Handwritten Note</p>
+<p class="text-[10px] font-bold tracking-tighter uppercase opacity-50">请写下你的寄语</p>
 </div>
-<p class="text-lg font-display italic text-primary/80 dark:text-purple-300">"Victory is sweet, but seeing you play together is sweeter."</p>
+<p class="text-lg font-display italic text-primary/80 dark:text-purple-300"></p>
 <div class="mt-4 flex justify-end">
-<p class="text-xs font-bold text-slate-400">- Fan From Tokyo</p>
+<p class="text-xs font-bold text-slate-400"></p>
 </div>
 </div>
 </div>
@@ -342,86 +326,123 @@
     if(mobileBtn) mobileBtn.addEventListener('click', toggleMenu);
     if(closeBtn) closeBtn.addEventListener('click', toggleMenu);
 </script>
-<!-- 放在</body>前面，覆盖所有旧上传代码 -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-// ========== 只改这一行！填你的publishable key ==========
+// ===================== 只填你的 KEY =====================
 const SUPABASE_KEY = "sb_publishable_cFt5KUP4IM6-umB52q5Yjw_vLTT9DNN";
-// ======================================================
+// ========================================================
 const SUPABASE_URL = "https://oogswxneferluwmsljca.supabase.co";
 
-// 正确初始化Supabase（核心！之前的关键错误已修正）
+// 初始化
 const { createClient } = supabase;
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// 1. 创建隐藏上传框
-const fileInput = document.createElement("input");
-fileInput.type = "file";
-fileInput.accept = "image/*";
-fileInput.style.display = "none";
-document.body.appendChild(fileInput);
+// 绑定你的输入框（和你之前加的 id 完全对应）
+const nickname = document.getElementById("nickname");
+const message = document.getElementById("message");
+const fileInput = document.getElementById("fileInput");
+const uploadBtn = document.getElementById("uploadBtn");
+const submitBtn = document.getElementById("submitBtn");
+const wishList = document.getElementById("wishList");
 
-// 2. 新增[SOI]/[EOI]选择框（自动加到页面，不用手动加）
-const markContainer = document.createElement("div");
-markContainer.style.margin = "10px 0";
-markContainer.innerHTML = `
-    <label>选择标记：</label>
-    <select id="markSelect">
-        <option value="[SOI]" selected>[SOI]</option>
-        <option value="[EOI]">[EOI]</option>
-    </select>
-`;
-// 把选择框加到上传按钮前面
-const submitBtn = document.getElementById("submitPhotoBtn");
-submitBtn.parentNode.insertBefore(markContainer, submitBtn);
+// 点击上传区域选择图片
+uploadBtn.addEventListener("click", () => fileInput.click());
 
-// 3. 绑定按钮点击事件
-submitBtn.addEventListener("click", () => {
-    fileInput.click();
-});
+// 页面加载加载历史心愿
+window.onload = loadWishes;
 
-// 4. 选择图片后上传+入库（带标记）
-fileInput.addEventListener("change", async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+// 提交按钮逻辑
+submitBtn.addEventListener("click", async () => {
+  let nick = nickname.value.trim();
+  let msg = message.value.trim();
+  let file = fileInput.files[0];
 
-    // 获取手动选择的[SOI]/[EOI]标记
-    const selectedMark = document.getElementById("markSelect").value;
+  if (!nick || !msg) {
+    alert("Please fill in nickname & message!");
+    return;
+  }
 
-    // 生成唯一文件名
-    const fileName = `photo/${Date.now()}_${file.name}`;
-
-    // 第一步：上传图片到pet-photos桶
-    const { error: uploadError } = await supabaseClient
-        .storage
-        .from("pet-photos")
-        .upload(fileName, file);
-    if (uploadError) {
-        alert("图片上传失败：" + uploadError.message);
-        return;
+  try {
+    let photoUrl = null;
+    if (file) {
+      const filename = `wish/${Date.now()}_${file.name}`;
+      const { error: upErr } = await supabaseClient
+        .storage.from("pet-photos").upload(filename, file);
+      if (upErr) throw upErr;
+      
+      const { data } = supabaseClient.storage.from("pet-photos").getPublicUrl(filename);
+      photoUrl = data.publicUrl;
     }
 
-    // 第二步：获取图片公开链接
-    const { data: urlData } = supabaseClient
-        .storage
-        .from("pet-photos")
-        .getPublicUrl(fileName);
+    // 写入数据库
+    const { error: insErr } = await supabaseClient.from("photo_submit").insert([{
+      nickname: nick,
+      message: msg,
+      photo_url: photoUrl
+    }]);
+    if (insErr) throw insErr;
 
-    // 第三步：写入数据库（带[SOI]/[EOI]标记）
-    const { error: insertError } = await supabaseClient
-        .from("photo_submit")
-        .insert([{
-            photo_url: urlData.publicUrl,
-            mark_tag: selectedMark // 关键：存入选择的标记
-        }]);
-
-    if (insertError) {
-        alert("数据库存储失败：" + insertError.message);
-        return;
-    }
-
-    // 上传成功弹窗（显示选中的标记）
-    alert(`✅ 上传成功！${selectedMark}标记已同步存入数据库！`);
+    alert("✅ Wish Posted Successfully!");
+    nickname.value = "";
+    message.value = "";
+    fileInput.value = "";
+    loadWishes();
+  } catch (err) {
+    alert("Failed: " + err.message);
+    console.error(err);
+  }
 });
+
+// ==============================================
+// 核心：渲染卡片 = 你截图里 100% 同款结构 + class
+// ==============================================
+async function loadWishes() {
+  const { data, error } = await supabaseClient
+    .from("photo_submit")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error || !data) {
+    wishList.innerHTML = `<p class="text-primary/60 text-center">Load failed</p>`;
+    return;
+  }
+
+  // 完全复刻你原版的卡片 HTML 结构 + 所有 class
+  wishList.innerHTML = data.map(item => {
+    const timeStr = new Date(item.created_at).toLocaleString();
+    return `
+    <div class="masonry-item">
+      <div class="kawaii-card bg-white/90 dark:bg-white/10 backdrop-blur-xl p-8 rounded-xl bubble-glow relative">
+        <div class="absolute -top-3 -right-3 flex gap-1">
+          <span class="material-icons text-primary text-xl drop-shadow-sm">favorite</span>
+          <span class="material-icons text-cerulean text-xl drop-shadow-sm">star</span>
+        </div>
+        <div class="absolute -bottom-2 -left-2 bg-purple-50 w-8 h-8 rounded-full flex items-center justify-center">
+          <span class="text-[10px] font-bold text-primary">💜</span>
+        </div>
+
+        <div class="flex items-center gap-3 mb-4">
+          <div class="relative">
+            <img alt="profile" class="w-12 h-12 rounded-full border-4 border-purple-100 shadow-sm object-cover">
+            <div class="absolute -bottom-1 -right-1 text-xs">✨</div>
+          </div>
+          <div>
+            <p class="font-bold text-sm text-primary dark:text-purple-300">${item.nickname}</p>
+            <p class="text-[10px] opacity-60">${timeStr}</p>
+          </div>
+        </div>
+
+        <p class="text-sm text-gray-700 dark:text-white/80 leading-relaxed">${item.message}</p>
+        
+        ${item.photo_url ? `
+        <div class="mt-4 rounded-xl overflow-hidden">
+          <img src="${item.photo_url}" alt="memory" class="w-full h-auto rounded-xl">
+        </div>
+        ` : ""}
+      </div>
+    </div>
+    `;
+  }).join("");
+}
 </script>
 </body></html>
