@@ -55,6 +55,8 @@
     }
     .kawaii-card {
         transition: transform 0.3s ease;
+        position: relative; /* 新增：确保卡片内元素层级正常 */
+        z-index: 10; /* 新增：高于背景 */
     }
     .kawaii-card:hover {
         transform: scale(1.03) rotate(1deg);
@@ -69,6 +71,8 @@
     .masonry-item {
         break-inside: avoid;
         margin-bottom: 1.5rem;
+        position: relative; /* 新增：修复布局层级 */
+        z-index: 10;
     }
     .heart-btn {
         clip-path: path('M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z');
@@ -84,6 +88,13 @@
     }
     .delete-btn {
         @apply absolute top-2 right-2 w-8 h-8 rounded-full bg-red-500/10 hover:bg-red-500/20 flex items-center justify-center text-red-500 dark:text-red-400 transition-all opacity-0 group-hover:opacity-100 cursor-pointer;
+    }
+    /* 新增：图片容器样式，确保显示 */
+    .wish-image-container {
+        @apply mt-3 mb-2 w-full rounded-xl overflow-hidden border border-purple-100 dark:border-purple-900/20;
+    }
+    .wish-image {
+        @apply w-full h-auto max-h-64 object-cover; /* 改用auto高度，避免裁剪 */
     }
 </style>
 </head>
@@ -534,17 +545,18 @@ async function loadWishes() {
       const isOwnWish = item.user_id === currentUserId;
       const randomStyle = getRandomCardStyle();
       
-      // 核心修复：完善图片渲染逻辑，增加空值判断和错误处理
-      const imageHtml = item.photo_url && item.photo_url.trim()
-        ? `<div class="mt-3 mb-2">
-             <img 
-               src="${item.photo_url}" 
-               class="w-full h-48 object-cover rounded-xl" 
-               alt="用户上传的图片"
-               onerror="this.parentElement.style.display='none'" // 加载失败自动隐藏
-             />
-           </div>`
-        : '';
+      // ========== 关键修复1：简化图片渲染条件 ==========
+      // 只要有photo_url就渲染，不做trim判断，去掉onerror隐藏逻辑
+      const imageHtml = item.photo_url 
+  ? `<div class="wish-image-container">
+       <img 
+         src="${item.photo_url}" 
+         class="wish-image" 
+         alt="用户上传的图片"
+         onerror="this.src='https://via.placeholder.com/400x200?text=图片加载失败'"
+       />
+     </div>`
+  : '';
       
       return `
       <div class="masonry-item">
@@ -570,7 +582,7 @@ async function loadWishes() {
           ${imageHtml} <!-- 图片渲染 -->
           
           <!-- 核心修复：字段名正确映射，显示用户输入的寄语 -->
-          <p class="text-sm text-gray-700 dark:text-white/80 leading-relaxed">${item.mark_tag || ''}</p>
+          <p class="text-sm text-gray-700 dark:text-white/80 leading-relaxed mt-2">${item.mark_tag || ''}</p>
           ${randomStyle.tag}
         </div>
       </div>
@@ -614,6 +626,11 @@ form.addEventListener('submit', async (e) => {
     // 有图片就先上传
     if (selectedFile) {
       photoUrl = await uploadImage(selectedFile);
+      // 关键修复2：确认上传成功才继续
+      if (!photoUrl) {
+        alert('图片上传失败，请重试');
+        return;
+      }
     }
 
     // 写入数据库
