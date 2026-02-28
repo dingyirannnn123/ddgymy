@@ -91,10 +91,10 @@
     }
     /* 新增：图片容器样式，确保显示 */
     .wish-image-container {
-        @apply mt-3 mb-2 w-full rounded-xl overflow-hidden border border-purple-100 dark:border-purple-900/20;
+        @apply mt-3 mb-2 w-full rounded-xl overflow-hidden border border-purple-100 dark:border-purple-900/20 bg-slate-50 dark:bg-slate-800/50;
     }
     .wish-image {
-        @apply w-full h-auto max-h-64 object-cover; /* 改用auto高度，避免裁剪 */
+        @apply w-full h-auto object-contain; /* 移除 max-h 限制，使用 object-contain 确保完整展示 */
     }
 </style>
 </head>
@@ -172,13 +172,13 @@
         <form class="space-y-4" id="wishForm">
             <!-- 昵称输入框 -->
             <div>
-                <label class="block text-[10px] font-bold uppercase tracking-widest text-primary mb-1 ml-2">昵称</label>
-                <input id="nickname-input" class="input-kawaii" placeholder="e.g. 小汤圆" type="text"/>
+                <label class="block text-[10px] font-bold uppercase tracking-widest text-primary mb-1 ml-2">昵称 <span class="text-slate-400 font-normal opacity-60">(Alt+N)</span></label>
+                <input id="nickname-input" accesskey="n" class="input-kawaii" placeholder="e.g. 小汤圆" type="text"/>
             </div>
             <!-- 寄语文本域 -->
             <div>
-                <label class="block text-[10px] font-bold uppercase tracking-widest text-primary mb-1 ml-2">寄语</label>
-                <textarea id="message-input" class="input-kawaii resize-none" placeholder="Write something sweet..." rows="3"></textarea>
+                <label class="block text-[10px] font-bold uppercase tracking-widest text-primary mb-1 ml-2">寄语 <span class="text-slate-400 font-normal opacity-60">(Alt+M)</span></label>
+                <textarea id="message-input" accesskey="m" class="input-kawaii resize-none" placeholder="Write something sweet..." rows="3"></textarea>
             </div>
             
             <!-- 新增：图片上传区域 -->
@@ -326,10 +326,10 @@
 
 <!-- 悬浮按钮 -->
 <div class="fixed bottom-8 right-8 z-50 flex flex-col items-center pointer-events-none">
-<button class="pointer-events-auto group relative flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95">
+<button id="quick-write-btn" class="pointer-events-auto group relative flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95" title="点击直达填写区 (Alt+W)">
 <div class="w-20 h-20 bg-gradient-to-tr from-primary to-cerulean shadow-2xl heart-btn flex flex-col items-center justify-center text-white p-4">
 <span class="material-icons text-3xl group-hover:animate-bounce">pencil</span>
-<span class="text-[8px] font-bold uppercase tracking-widest text-center mt-1">Write</span>
+<span class="text-[8px] font-bold uppercase tracking-widest text-center mt-1">Write (Alt+W)</span>
 </div>
 <div class="absolute inset-0 bg-primary/40 blur-2xl -z-10 rounded-full scale-75 group-hover:scale-110 transition-transform"></div>
 </button>
@@ -385,6 +385,35 @@
 
     if(mobileBtn) mobileBtn.addEventListener('click', toggleMenu);
     if(closeBtn) closeBtn.addEventListener('click', toggleMenu);
+
+    // 点击悬浮按钮直达填写区
+    const quickWriteBtn = document.getElementById('quick-write-btn');
+    quickWriteBtn?.addEventListener('click', () => {
+        const nicknameInput = document.getElementById('nickname-input');
+        if (nicknameInput) {
+            nicknameInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            nicknameInput.focus();
+        }
+    });
+
+    // 全局快捷键监听
+    window.addEventListener('keydown', (e) => {
+        // Alt + W 跳转到填写区并聚焦昵称输入框
+        if (e.altKey && e.key.toLowerCase() === 'w') {
+            e.preventDefault();
+            const nicknameInput = document.getElementById('nickname-input');
+            if (nicknameInput) {
+                nicknameInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                nicknameInput.focus();
+            }
+        }
+        
+        // 在寄语输入框中按 Ctrl + Enter 提交
+        if (e.ctrlKey && e.key === 'Enter' && e.target.id === 'message-input') {
+            e.preventDefault();
+            document.getElementById('wishForm').dispatchEvent(new Event('submit', { cancelable: true }));
+        }
+    });
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
