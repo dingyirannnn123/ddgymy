@@ -170,6 +170,25 @@
                 <textarea id="message-input" class="input-kawaii resize-none" placeholder="Write something sweet..." rows="3"></textarea>
             </div>
             
+            <!-- 新增：图片上传区域 -->
+            <div>
+              <label class="block text-[10px] font-bold uppercase tracking-widest text-primary mb-1 ml-2">上传图片（可选）</label>
+              <label class="custom-file-upload">
+                <input 
+                  type="file" 
+                  id="imageUpload" 
+                  accept="image/*" 
+                  hidden
+                />
+                <span class="material-icons text-primary">add_photo_alternate</span>
+                <span id="uploadText">点击上传图片</span>
+              </label>
+              <!-- 预览区 -->
+              <div id="imagePreview" class="mt-3 hidden">
+                <img id="previewImg" class="max-h-40 rounded-xl object-contain" />
+              </div>
+            </div>
+            
             <!-- 提交按钮 -->
             <div class="pt-2 flex justify-center">
               <button type="submit" class="group relative flex items-center justify-center w-20 h-20 transition-all duration-300 hover:scale-110 active:scale-95">
@@ -357,7 +376,6 @@
     if(closeBtn) closeBtn.addEventListener('click', toggleMenu);
 </script>
 
-<!-- Supabase 核心逻辑 -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 // ===================== 你的 Supabase 配置 =====================
@@ -365,45 +383,37 @@ const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 const SUPABASE_URL = "https://oogswxneferluwmsljca.supabase.co";
 // ===================== 配置结束 =====================
 
-// 初始化 Supabase 客户端
 const { createClient } = supabase;
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// ========== 随机卡片样式+随机头像（限定你的4种样式+自有图片） ==========
+// ========== 随机卡片样式+随机头像 ==========
 function getRandomCardStyle() {
-  // 你的图片资源列表（从代码中提取）
   const avatarList = [
     "https://r2.ddgymy.dpdns.org/PicGo/矶抚2.webp",
     "https://r2.ddgymy.dpdns.org/PicGo/貂蝉3.webp",
     "https://r2.ddgymy.dpdns.org/PicGo/貂蝉2.webp"
   ];
-  // 随机选一个头像
   const randomAvatar = avatarList[Math.floor(Math.random() * avatarList.length)];
 
-  // 4种指定样式（匹配你的截图）
   const styleList = [
-    // 样式1：大圆角基础款
     {
       containerClass: 'bg-white/90 dark:bg-white/10 backdrop-blur-xl p-6 rounded-3xl bubble-glow relative',
       decorator: `<div class="absolute -top-3 -right-3"><span class="material-icons text-primary text-xl drop-shadow-sm">star</span></div>`,
       tag: '',
       avatar: randomAvatar
     },
-    // 样式2：椭圆装饰款
     {
       containerClass: 'bg-purple-50/70 dark:bg-primary/10 backdrop-blur-xl p-8 rounded-full bubble-glow relative',
       decorator: `<div class="absolute top-4 right-4 flex gap-1"><span class="text-purple-400">★</span><span class="text-blue-400">♥</span><span class="text-purple-400">★</span></div>`,
       tag: '',
       avatar: randomAvatar
     },
-    // 样式3：简洁小卡片款
     {
       containerClass: 'bg-white/80 dark:bg-white/5 backdrop-blur-xl p-5 rounded-2xl bubble-glow relative',
       decorator: '',
       tag: '',
       avatar: randomAvatar
     },
-    // 样式4：标签款
     {
       containerClass: 'bg-white/95 dark:bg-slate-900/90 backdrop-blur-xl p-6 rounded-2xl bubble-glow relative',
       decorator: '',
@@ -413,11 +423,14 @@ function getRandomCardStyle() {
   ];
   return styleList[Math.floor(Math.random() * styleList.length)];
 }
-// ========== 样式函数结束 ==========
 
-// 绑定页面元素
+// ========== 页面元素绑定 ==========
 const nicknameInput = document.getElementById("nickname-input");
 const messageInput = document.getElementById("message-input");
+const imageUpload = document.getElementById("imageUpload");
+const imagePreview = document.getElementById("imagePreview");
+const previewImg = document.getElementById("previewImg");
+const uploadText = document.getElementById("uploadText");
 const wishList = document.getElementById("wishList");
 const successToast = document.getElementById('successToast');
 const form = document.getElementById("wishForm");
@@ -425,25 +438,76 @@ const deleteConfirm = document.getElementById("deleteConfirm");
 const cancelDelete = document.getElementById("cancelDelete");
 const confirmDelete = document.getElementById("confirmDelete");
 
-// 全局变量：存储当前要删除的记录ID
 let currentDeleteId = null;
+let selectedFile = null; // 存储选中的图片文件
 
-// 生成唯一标识（用于关联自己的寄语，无需登录）
+// ========== 图片上传与预览 ==========
+imageUpload.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  
+  // 只允许图片
+  if (!file.type.startsWith('image/')) {
+    alert('请选择图片文件');
+    return;
+  }
+  
+  selectedFile = file;
+  uploadText.textContent = file.name;
+  
+  // 预览
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    previewImg.src = ev.target.result;
+    imagePreview.classList.remove('hidden');
+  };
+  reader.readAsDataURL(file);
+});
+
+// ========== 上传图片到 Supabase Storage ==========
+async function uploadImage(file) {
+  if (!file) return null;
+  
+  // 生成唯一文件名，避免覆盖
+  const fileExt = file.name.split('.').pop();
+  const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 15)}.${fileExt}`;
+  
+  // 上传到 Storage
+  const { data, error } = await supabaseClient
+    .storage
+    .from('wish-images')
+    .upload(fileName, file, {
+      cacheControl: '3600',
+      upsert: false
+    });
+  
+  if (error) {
+    console.error('上传图片失败:', error);
+    throw error;
+  }
+  
+  // 获取公开访问 URL
+  const { data: { publicUrl } } = supabaseClient
+    .storage
+    .from('wish-images')
+    .getPublicUrl(data.path);
+  
+  return publicUrl;
+}
+
+// ========== 生成用户唯一 ID ==========
 function generateUniqueId() {
-  // 优先使用已有的标识
   let id = localStorage.getItem('wishwall_user_id');
   if (!id) {
-    // 生成随机标识并存入本地存储
     id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     localStorage.setItem('wishwall_user_id', id);
   }
   return id;
 }
 
-// 页面加载时加载历史寄语
+// ========== 加载寄语列表 ==========
 window.onload = loadWishes;
 
-// 渲染历史寄语卡片（随机样式+随机头像）
 async function loadWishes() {
   try {
     const { data, error } = await supabaseClient
@@ -456,33 +520,32 @@ async function loadWishes() {
       return;
     }
 
-    // 获取当前用户标识
     const currentUserId = generateUniqueId();
 
-    // 渲染卡片列表
     wishList.innerHTML = data.map(item => {
       const timeStr = new Date(item.created_at).toLocaleString();
-      // 判断是否是自己的寄语（匹配 user_id 字段）
       const isOwnWish = item.user_id === currentUserId;
-      // 获取随机样式+头像
       const randomStyle = getRandomCardStyle();
+      
+      // 有图片就渲染图片
+      const imageHtml = item.photo_url 
+        ? `<div class="mt-3 mb-2">
+             <img src="${item.photo_url}" class="w-full h-48 object-cover rounded-xl" />
+           </div>`
+        : '';
       
       return `
       <div class="masonry-item">
         <div class="kawaii-card ${randomStyle.containerClass} group">
-          <!-- 仅自己可见的删除按钮 -->
           ${isOwnWish ? `
             <button class="delete-btn" data-id="${item.id}">
               <span class="material-icons text-sm">delete</span>
             </button>
           ` : ''}
-          
-          <!-- 样式装饰元素 -->
           ${randomStyle.decorator}
 
           <div class="flex items-center gap-3 mb-3">
             <div class="relative">
-              <!-- 随机使用你的图片作为头像 -->
               <img alt="profile" class="w-10 h-10 rounded-full border-3 border-purple-100 shadow-sm object-cover" src="${randomStyle.avatar}">
               <div class="absolute -bottom-1 -right-1 text-xs">✨</div>
             </div>
@@ -491,16 +554,16 @@ async function loadWishes() {
               <p class="text-xs opacity-60">${timeStr}</p>
             </div>
           </div>
-          <p class="text-sm text-gray-700 dark:text-white/80 leading-relaxed">${item.mark_tag || ''}</p>
           
-          <!-- 标签元素 -->
+          ${imageHtml} <!-- 这里渲染图片 -->
+          
+          <p class="text-sm text-gray-700 dark:text-white/80 leading-relaxed">${item.mark_tag || ''}</p>
           ${randomStyle.tag}
         </div>
       </div>
       `;
     }).join("");
 
-    // 绑定删除按钮事件
     document.querySelectorAll('.delete-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         currentDeleteId = e.currentTarget.dataset.id;
@@ -514,7 +577,58 @@ async function loadWishes() {
   }
 }
 
-// 显示成功提示
+// ========== 提交表单（含图片上传） ==========
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const nick = nicknameInput?.value.trim() || '';
+  const msg = messageInput?.value.trim() || '';
+
+  if (!nick || !msg) {
+    alert("昵称和寄语不能为空哦～");
+    return;
+  }
+
+  const submitBtn = document.getElementById('submitBtn');
+  const originalText = submitBtn?.innerText || "Submit";
+  if (submitBtn) submitBtn.innerText = "上传中...";
+
+  try {
+    const currentUserId = generateUniqueId();
+    let photoUrl = "";
+
+    // 有图片就先上传
+    if (selectedFile) {
+      photoUrl = await uploadImage(selectedFile);
+    }
+
+    // 写入数据库
+    const { error: insErr } = await supabaseClient.from("photo_submit").insert([{
+      nickname: nick,
+      mark_tag: msg,
+      photo_url: photoUrl, // 保存图片 URL
+      user_id: currentUserId
+    }]);
+    
+    if (insErr) throw insErr;
+
+    // 成功后重置
+    showSuccessToast();
+    form.reset();
+    selectedFile = null;
+    imagePreview.classList.add('hidden');
+    uploadText.textContent = "点击上传图片";
+    loadWishes();
+
+  } catch (err) {
+    console.error('提交失败:', err);
+    alert('提交失败: ' + err.message);
+  } finally {
+    if (submitBtn) submitBtn.innerText = originalText;
+  }
+});
+
+// ========== 提示与删除 ==========
 function showSuccessToast() {
   if (!successToast) return;
   successToast.style.opacity = '1';
@@ -525,87 +639,30 @@ function showSuccessToast() {
   }, 3000);
 }
 
-// 取消删除
-if (cancelDelete) {
-  cancelDelete.addEventListener('click', () => {
+cancelDelete?.addEventListener('click', () => {
+  deleteConfirm.classList.add('hidden');
+  currentDeleteId = null;
+});
+
+confirmDelete?.addEventListener('click', async () => {
+  if (!currentDeleteId) return;
+
+  try {
+    const { error } = await supabaseClient
+      .from("photo_submit")
+      .delete()
+      .eq("id", currentDeleteId);
+
+    if (error) throw error;
+
     deleteConfirm.classList.add('hidden');
     currentDeleteId = null;
-  });
-}
-
-// 确认删除
-if (confirmDelete) {
-  confirmDelete.addEventListener('click', async () => {
-    if (!currentDeleteId) return;
-
-    try {
-      // 删除数据库记录
-      const { error } = await supabaseClient
-        .from("photo_submit")
-        .delete()
-        .eq("id", currentDeleteId);
-
-      if (error) throw error;
-
-      // 删除成功后刷新列表
-      deleteConfirm.classList.add('hidden');
-      currentDeleteId = null;
-      loadWishes();
-
-    } catch (err) {
-      console.error('删除失败:', err);
-      alert('删除失败: ' + err.message);
-    }
-  });
-}
-
-// 表单提交逻辑
-if (form) {
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    // 获取输入值
-    const nick = nicknameInput?.value.trim() || '';
-    const msg = messageInput?.value.trim() || '';
-
-    // 输入校验
-    if (!nick || !msg) {
-      alert("昵称和寄语不能为空哦～");
-      return;
-    }
-
-    // 提交按钮加载状态
-    const submitBtn = document.getElementById('submitBtn');
-    const originalText = submitBtn?.innerText || "Submit";
-    if (submitBtn) submitBtn.innerText = "Posting...";
-
-    try {
-      // 获取当前用户唯一标识
-      const currentUserId = generateUniqueId();
-
-      // 写入数据库（补充photo_url空字符串，满足非空约束）
-      const { error: insErr } = await supabaseClient.from("photo_submit").insert([{
-        nickname: nick,
-        mark_tag: msg,
-        photo_url: "",
-        user_id: currentUserId
-      }]);
-      if (insErr) throw insErr;
-
-      // 提交成功处理
-      showSuccessToast();
-      form.reset();
-      loadWishes();
-
-    } catch (err) {
-      console.error('提交失败:', err);
-      alert('提交失败: ' + err.message);
-    } finally {
-      // 恢复按钮状态
-      if (submitBtn) submitBtn.innerText = originalText;
-    }
-  });
-}
+    loadWishes();
+  } catch (err) {
+    console.error('删除失败:', err);
+    alert('删除失败: ' + err.message);
+  }
+});
 </script>
 </body>
 </html>
