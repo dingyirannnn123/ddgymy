@@ -86,15 +86,41 @@
     .gradient-text {
         @apply bg-clip-text text-transparent bg-gradient-to-r from-cerulean to-primary;
     }
+    /* ========== 核心修改：优化删除按钮样式，适配移动端 ========== */
     .delete-btn {
-        @apply absolute top-2 right-2 w-8 h-8 rounded-full bg-red-500/10 hover:bg-red-500/20 flex items-center justify-center text-red-500 dark:text-red-400 transition-all opacity-0 group-hover:opacity-100 cursor-pointer;
+        @apply absolute top-2 right-2 
+        /* 增大点击区域，适配移动端触摸 */
+        w-10 h-10 
+        rounded-full bg-red-500/10 hover:bg-red-500/20 
+        flex items-center justify-center 
+        text-red-500 dark:text-red-400 
+        transition-all 
+        /* 移动端始终显示，hover 效果只在桌面端生效 */
+        opacity-100 md:opacity-0 
+        md:group-hover:opacity-100 
+        cursor-pointer
+        /* 提高层级，确保能点击 */
+        z-20
+        /* 添加触摸反馈 */
+        active:scale-90;
     }
+    /* 新增：移动端删除按钮的图标放大 */
+    @media (max-width: 767px) {
+        .delete-btn .material-icons {
+            font-size: 18px !important;
+        }
+    }
+    /* ========== 删除按钮样式优化结束 ========== */
     /* 新增：图片容器样式，确保显示 */
     .wish-image-container {
         @apply mt-3 mb-2 w-full rounded-xl overflow-hidden border border-purple-100 dark:border-purple-900/20 bg-slate-50 dark:bg-slate-800/50;
     }
     .wish-image {
         @apply w-full h-auto object-contain; /* 移除 max-h 限制，使用 object-contain 确保完整展示 */
+    }
+    /* 新增：删除确认弹窗适配移动端 */
+    #deleteConfirm .bg-white {
+        @apply max-w-[90%] w-full;
     }
 </style>
 </head>
@@ -167,7 +193,7 @@
             <div class="w-10 h-10 bg-purple-500/10 rounded-full flex items-center justify-center">
                 <span class="material-icons text-primary">edit</span>
             </div>
-            <h2 class="font-bold text-lg text-primary">Write</h2>
+            <h2 class="font-bold text-lg text-primary">Write（按一次即可上墙）</h2>
         </div>
         <form class="space-y-4" id="wishForm">
             <!-- 昵称输入框 -->
@@ -591,7 +617,7 @@ async function loadWishes() {
       <div class="masonry-item">
         <div class="kawaii-card ${randomStyle.containerClass} group">
           ${isOwnWish ? `
-            <button class="delete-btn" data-id="${item.id}">
+            <button class="delete-btn" data-id="${item.id}" ontouchstart="void(0)">
               <span class="material-icons text-sm">delete</span>
             </button>
           ` : ''}
@@ -618,13 +644,28 @@ async function loadWishes() {
       `;
     }).join(""); // 关键修复：必须加join('')
 
-    // 绑定删除事件
-    document.querySelectorAll('.delete-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        currentDeleteId = e.currentTarget.dataset.id;
+    // ========== 核心优化：适配移动端的删除事件绑定 ==========
+    // 使用事件委托，兼容移动端触摸和桌面端点击
+    wishList.addEventListener('click', function(e) {
+      const deleteBtn = e.target.closest('.delete-btn');
+      if (deleteBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        currentDeleteId = deleteBtn.dataset.id;
         deleteConfirm.classList.remove('hidden');
-      });
+      }
     });
+
+    // 额外添加触摸事件支持（针对移动端）
+    wishList.addEventListener('touchstart', function(e) {
+      const deleteBtn = e.target.closest('.delete-btn');
+      if (deleteBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        currentDeleteId = deleteBtn.dataset.id;
+        deleteConfirm.classList.remove('hidden');
+      }
+    }, { passive: false });
 
   } catch (err) {
     console.error("加载寄语失败：", err);
@@ -704,6 +745,7 @@ cancelDelete?.addEventListener('click', () => {
   currentDeleteId = null;
 });
 
+// 给删除确认按钮添加触摸支持
 confirmDelete?.addEventListener('click', async () => {
   if (!currentDeleteId) return;
 
@@ -721,6 +763,14 @@ confirmDelete?.addEventListener('click', async () => {
   } catch (err) {
     console.error('删除失败:', err);
     alert('删除失败: ' + err.message);
+  }
+});
+
+// 移动端点击空白处关闭删除确认弹窗
+deleteConfirm.addEventListener('click', function(e) {
+  if (e.target === deleteConfirm) {
+    deleteConfirm.classList.add('hidden');
+    currentDeleteId = null;
   }
 });
 </script>
